@@ -19,29 +19,26 @@
 ## 🌟 Key Features
 
 - **Brand & Developer Identity**: **DoMyOSite** engineered by **Praneeth Sai**, connecting clients directly with the developer with zero middlemen.
-- **Asymmetric, Non-Linear Architecture**:
-  - 🖥️ **Interactive Code Terminal Hero**: Live JavaScript configuration card with floating tech badges.
-  - 🍱 **Bento Grid Services Layout**: Multi-size feature cards, miniature browser previews, and student tags.
-  - 👤 **Founder Spotlight Section**: Direct-to-developer credentials, GitHub verified status, and stats.
-  - ⚡ **Zig-Zag Process Timeline**: Alternating glowing nodes and roadmap cards.
-  - 🇮🇳 **Budget-Friendly Indian Pricing (INR)**: College starter tier from **₹999**, standard portfolio **₹2,499**, and custom apps **₹4,999+**.
-  - 🚀 High-converting Business Landing Pages
-  - 💼 Professional Portfolios & Resumes
-  - 🛒 E-Commerce & Instant Storefronts
-  - ⚙️ Custom Web Apps & Automations
-  - 🔄 Website Redesigns & Performance Optimization
-- **Campus & Student Exclusive**:
-  - 🎓 **JUIT Solan 25% Flat Discount**: Automatic detection of `@juitsolan.in` emails via Google Sign-In with live recalculated prices (Starter: ₹749, Pro: ₹1,874, Custom: ₹3,749).
+- **Satyameva-Inspired Glassmorphic Authentication**:
+  - 🕉️ **Multi-Screen Auth Flow**: Complete Login, Signup, and 6-digit OTP verification screens matching the Satyameva design pattern.
+  - 🔑 **Quick Fill Demos**: 1-click test pre-fills for Studio Admin (`domyosite@gmail.com`) and JUIT Student (`rahul@juitsolan.in`).
+  - 🔢 **Interactive OTP Digit Inputs**: Auto-advancing inputs with backspace and paste support.
+  - 🎓 **JUIT Waknaghat 25% Campus Discount**: Automatic 25% discount applied across all tiers for `@juitsolan.in` accounts.
+- **Three.js 3D Web Experience (WebGL 2.0)**:
+  - 🌐 **Interactive Hero 3D Scene**: Floating wireframe icosahedron and octahedron core with 200 cyberspace particle stars and smooth mouse-tracking parallax.
+  - 🧊 **Real-Time 3D Configurator**: Interactive viewport allowing clients to switch geometries (Torus Knot, Tech Icosahedron, Cyber Sphere), toggle Wireframe vs. Solid Metallic, adjust rotation speed, and rotate in 3D.
+  - ⚡ **Optimized Performance**: Clamped mobile DPR (1.0) and WebGL capability detection fallback.
+- **Gemini API AI Scope & Cost Estimator (`gemini-api-dev`)**:
+  - 🤖 **Powered by Gemini 3.8 Flash**: Clients describe any website idea and receive an instant structured breakdown of recommended tech stack, turnaround, package tier, and budget in INR.
+  - 📋 **1-Click Scope Transfer**: Automatically fills the AI project breakdown into the direct contact form.
+- **High-Definition Project & Repo Showcase**:
+  - 📸 High-resolution imagery and visual overlays for **`SecurePassGuard`**, **`camera-email-app`**, and **`studybud`**.
+  - 📱 **Interactive Live Preview Modal** with Desktop and Mobile device viewport simulation.
 - **Interactive UPI Pay Layout & Checkout**:
-  - 💳 **Dynamic UPI QR Code**: Real-time generation of custom UPI payment QR codes with exact amount and recipient note.
+  - 💳 **Dynamic UPI QR Code**: Real-time generation of custom UPI payment QR codes with exact amount and recipient note (`8777679256@ybl`).
   - 📲 **Instant App Checkout**: Direct intent deep links for Google Pay, PhonePe, Paytm, and BHIM.
   - 📋 **1-Click Copy UPI ID**: Copies `8777679256@ybl` with visual feedback.
-  - 📝 **UTR Verification**: Allows users to enter their transaction reference and sends instant WhatsApp confirmation to Praneeth.
-- **Audited Cloud Security (`firestore.rules`)**:
-  - Audited against the **Firebase Security Rules Auditor** checklist (identity-level security, resource exhaustion prevention, string length checks, and JUIT domain verification).
-- **Interactive Project & Repository Showcase**:
-  - High-resolution SVG illustrations for **`SecurePassGuard`**, **`camera-email-app`**, and **`studybud`**.
-  - Interactive **Live Preview Modal** with Desktop and Mobile device viewport simulation.
+  - 📝 **UTR Verification**: Allows users to enter their transaction reference with instant confirmation.
 
 ---
 

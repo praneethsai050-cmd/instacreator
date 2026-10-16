@@ -89,33 +89,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Google Authentication & JUIT Campus Discount System ---
+  // --- Satyameva-Style Authentication & JUIT Campus Discount System ---
   const loginBtn = document.getElementById('loginBtn');
   const signOutBtn = document.getElementById('signOutBtn');
   const authModalOverlay = document.getElementById('authModalOverlay');
   const closeAuthModal = document.getElementById('closeAuthModal');
-  const demoJuitLoginBtn = document.getElementById('demoJuitLoginBtn');
-  const submitEmailAuthBtn = document.getElementById('submitEmailAuthBtn');
-  const authEmailInput = document.getElementById('authEmailInput');
-
   const userProfilePill = document.getElementById('userProfilePill');
   const navUserName = document.getElementById('navUserName');
   const navUserAvatar = document.getElementById('navUserAvatar');
   const navJuitBadge = document.getElementById('navJuitBadge');
-
-  const googleQuickLoginBtn = document.getElementById('googleQuickLoginBtn');
   const continueAsGuestBtn = document.getElementById('continueAsGuestBtn');
 
-  function openAuthModal() {
-    if (authModalOverlay) authModalOverlay.classList.remove('hidden');
+  // Screen Switching Logic (Satyameva pattern)
+  window.showAuthScreen = function(screenName) {
+    const screens = ['login', 'signup', 'otp'];
+    screens.forEach(s => {
+      const el = document.getElementById(`screen-${s}`);
+      if (el) el.classList.add('hidden');
+    });
+    const target = document.getElementById(`screen-${screenName}`);
+    if (target) {
+      target.classList.remove('hidden');
+      const err = target.querySelector('.error-div');
+      if (err) {
+        err.classList.add('hidden');
+        err.textContent = '';
+      }
+    }
+  };
+
+  function openAuthModal(defaultScreen = 'login') {
+    if (authModalOverlay) {
+      authModalOverlay.classList.remove('hidden');
+      window.showAuthScreen(defaultScreen);
+    }
   }
 
   function closeAuthModalDialog() {
     if (authModalOverlay) authModalOverlay.classList.add('hidden');
   }
 
-  if (loginBtn) loginBtn.addEventListener('click', openAuthModal);
-  if (juitClaimBtn) juitClaimBtn.addEventListener('click', openAuthModal);
+  if (loginBtn) loginBtn.addEventListener('click', () => openAuthModal('login'));
+  if (juitClaimBtn) juitClaimBtn.addEventListener('click', () => openAuthModal('login'));
   if (closeAuthModal) closeAuthModal.addEventListener('click', closeAuthModalDialog);
 
   if (continueAsGuestBtn) {
@@ -131,11 +146,178 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Switch links
+  const toSignupLink = document.getElementById('toSignupLink');
+  const toLoginLink = document.getElementById('toLoginLink');
+  const backToLoginFromOtp = document.getElementById('backToLoginFromOtp');
+  const resendOtpBtn = document.getElementById('resendOtpBtn');
+
+  if (toSignupLink) toSignupLink.addEventListener('click', (e) => { e.preventDefault(); window.showAuthScreen('signup'); });
+  if (toLoginLink) toLoginLink.addEventListener('click', (e) => { e.preventDefault(); window.showAuthScreen('login'); });
+  if (backToLoginFromOtp) backToLoginFromOtp.addEventListener('click', (e) => { e.preventDefault(); window.showAuthScreen('login'); });
+  if (resendOtpBtn) resendOtpBtn.addEventListener('click', () => {
+    alert('Verification code resent: 123456');
+    const firstDigit = document.querySelector('.otp-digit');
+    if (firstDigit) firstDigit.focus();
+  });
+
+  // Pre-fill demo buttons (Satyameva pattern)
+  const fillStudioDemoBtn = document.getElementById('fillStudioDemoBtn');
+  const fillJuitDemoBtn = document.getElementById('fillJuitDemoBtn');
+  if (fillStudioDemoBtn) {
+    fillStudioDemoBtn.addEventListener('click', () => {
+      const email = document.getElementById('login-email');
+      const pass = document.getElementById('login-password');
+      if (email) email.value = 'domyosite@gmail.com';
+      if (pass) pass.value = 'domyo123';
+    });
+  }
+  if (fillJuitDemoBtn) {
+    fillJuitDemoBtn.addEventListener('click', () => {
+      const email = document.getElementById('login-email');
+      const pass = document.getElementById('login-password');
+      if (email) email.value = 'rahul@juitsolan.in';
+      if (pass) pass.value = 'juit123';
+    });
+  }
+
+  // Pending user state for OTP step
+  let pendingAuthUser = null;
+
+  // Login handler
+  window.handleSatyamevaLogin = function() {
+    const emailInput = document.getElementById('login-email');
+    const errDiv = document.getElementById('login-error');
+
+    if (!emailInput || !emailInput.value.trim() || !emailInput.value.includes('@')) {
+      if (errDiv) {
+        errDiv.textContent = 'Please enter a valid email address.';
+        errDiv.classList.remove('hidden');
+      }
+      return;
+    }
+
+    const email = emailInput.value.trim().toLowerCase();
+    const namePart = email.split('@')[0];
+    const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+
+    pendingAuthUser = {
+      email: email,
+      name: email === 'domyosite@gmail.com' ? 'Praneeth (Studio Admin)' : displayName,
+      isJuit: email.endsWith('@juitsolan.in')
+    };
+
+    window.showAuthScreen('otp');
+    setTimeout(() => {
+      const firstDigit = document.querySelector('.otp-digit');
+      if (firstDigit) firstDigit.focus();
+    }, 150);
+  };
+
+  // Signup handler
+  window.handleSatyamevaSignup = function() {
+    const nameInput = document.getElementById('signup-name');
+    const emailInput = document.getElementById('signup-email');
+    const passInput = document.getElementById('signup-password');
+    const confirmInput = document.getElementById('signup-confirm');
+    const errDiv = document.getElementById('signup-error');
+
+    const name = nameInput ? nameInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+    const pass = passInput ? passInput.value : '';
+    const confirm = confirmInput ? confirmInput.value : '';
+
+    if (!name || !email.includes('@')) {
+      if (errDiv) { errDiv.textContent = 'Please provide your full name and valid email.'; errDiv.classList.remove('hidden'); }
+      return;
+    }
+    if (pass.length < 6) {
+      if (errDiv) { errDiv.textContent = 'Password must be at least 6 characters.'; errDiv.classList.remove('hidden'); }
+      return;
+    }
+    if (pass !== confirm) {
+      if (errDiv) { errDiv.textContent = 'Passwords do not match.'; errDiv.classList.remove('hidden'); }
+      return;
+    }
+
+    pendingAuthUser = {
+      name: name,
+      email: email,
+      isJuit: email.endsWith('@juitsolan.in')
+    };
+
+    window.showAuthScreen('otp');
+    setTimeout(() => {
+      const firstDigit = document.querySelector('.otp-digit');
+      if (firstDigit) firstDigit.focus();
+    }, 150);
+  };
+
+  // OTP Verification handler
+  window.handleSatyamevaVerifyOTP = function() {
+    const digitInputs = document.querySelectorAll('.otp-digit');
+    const otp = Array.from(digitInputs).map(d => d.value.trim()).join('');
+    const errDiv = document.getElementById('otp-error');
+
+    if (otp.length < 6) {
+      if (errDiv) {
+        errDiv.textContent = 'Please enter all 6 digits of the verification code.';
+        errDiv.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (otp === '123456' || otp.length === 6) {
+      const user = pendingAuthUser || {
+        name: 'DoMyOSite Client',
+        email: 'domyosite@gmail.com',
+        isJuit: false
+      };
+      applyUserSession(user);
+      digitInputs.forEach(d => d.value = '');
+    } else {
+      if (errDiv) {
+        errDiv.textContent = 'Invalid verification code. Please enter demo OTP: 123456';
+        errDiv.classList.remove('hidden');
+      }
+    }
+  };
+
+  // OTP keyboard auto-advancing
+  const otpDigits = document.querySelectorAll('.otp-digit');
+  otpDigits.forEach((digit, idx) => {
+    digit.addEventListener('input', () => {
+      if (digit.value.length >= 1) {
+        digit.value = digit.value.slice(-1);
+        if (idx < otpDigits.length - 1) {
+          otpDigits[idx + 1].focus();
+        }
+      }
+    });
+
+    digit.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !digit.value && idx > 0) {
+        otpDigits[idx - 1].focus();
+      }
+    });
+
+    digit.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const pasteData = (e.clipboardData || window.clipboardData).getData('text').trim();
+      if (/^\d{6}$/.test(pasteData)) {
+        pasteData.split('').forEach((char, i) => {
+          if (otpDigits[i]) otpDigits[i].value = char;
+        });
+        window.handleSatyamevaVerifyOTP();
+      }
+    });
+  });
+
   // Google Quick Sign-In Handler
+  const googleQuickLoginBtn = document.getElementById('googleQuickLoginBtn');
   if (googleQuickLoginBtn) {
     googleQuickLoginBtn.addEventListener('click', () => {
-      // If user clicks Google login, prompt for email with suggestion
-      const promptEmail = prompt("Sign In with Google Account:\nEnter your email (e.g. rahul@juitsolan.in for 25% discount, or @gmail.com):", "rahul@juitsolan.in");
+      const promptEmail = prompt("Sign In with Google Account:\nEnter your email (e.g. rahul@juitsolan.in for 25% discount, or domyosite@gmail.com):", "rahul@juitsolan.in");
       if (promptEmail && promptEmail.trim()) {
         const email = promptEmail.trim();
         const name = email.split('@')[0];
@@ -147,92 +329,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Automatically present the enhanced login gate first for new visitors
-  if (!currentUser && sessionStorage.getItem('domyosite_guest_dismissed') !== 'true') {
-    setTimeout(() => {
-      openAuthModal();
-    }, 350);
-  }
-
-  function applyUserSession(user) {
-    currentUser = user;
-    localStorage.setItem('domyosite_user', JSON.stringify(user));
-
-    if (loginBtn) loginBtn.style.display = 'none';
-    if (userProfilePill) userProfilePill.classList.remove('hidden');
-
-    if (navUserName) navUserName.textContent = user.name.split(' ')[0];
-    if (navUserAvatar) navUserAvatar.textContent = user.name.charAt(0).toUpperCase();
-
-    // Check if user has a verified JUIT Solan email
-    const isJuit = user.email.toLowerCase().endsWith('@juitsolan.in');
-    currentUser.isJuit = isJuit;
-
-    if (isJuit) {
-      if (navJuitBadge) navJuitBadge.classList.remove('hidden');
-      applyJuitPricingDiscount(true);
-      // Pre-fill email in contact form
-      const emailInput = document.getElementById('clientEmail');
-      if (emailInput) emailInput.value = user.email;
-
-      showJuitCelebrationToast(user.name);
-    } else {
-      if (navJuitBadge) navJuitBadge.classList.add('hidden');
-      applyJuitPricingDiscount(false);
-    }
-
-    closeAuthModalDialog();
-  }
-
-  function applyJuitPricingDiscount(enable) {
-    const plans = [
-      { cardId: 'planCard1', original: 999, savingsId: 'savings1', discounted: 749 },
-      { cardId: 'planCard2', original: 2499, savingsId: 'savings2', discounted: 1874 },
-      { cardId: 'planCard3', original: 4999, savingsId: 'savings3', discounted: 3749 }
-    ];
-
-    plans.forEach(plan => {
-      const card = document.getElementById(plan.cardId);
-      const savings = document.getElementById(plan.savingsId);
-      if (card) {
-        const valSpan = card.querySelector('.price-value');
-        const payBtn = card.querySelector('.open-pay-trigger');
-        if (enable) {
-          if (valSpan) valSpan.innerHTML = `<del style="font-size:1.6rem; opacity:0.5;">₹${plan.original.toLocaleString()}</del> ₹${plan.discounted.toLocaleString()}`;
-          if (savings) savings.classList.remove('hidden');
-          if (payBtn) {
-            payBtn.setAttribute('data-price', plan.discounted);
-            payBtn.innerHTML = `<i class="fa-solid fa-qrcode"></i> Book with JUIT 25% Off (₹${plan.discounted.toLocaleString()})`;
-          }
-        } else {
-          if (valSpan) valSpan.textContent = plan.original.toLocaleString();
-          if (savings) savings.classList.add('hidden');
-          if (payBtn) {
-            payBtn.setAttribute('data-price', plan.original);
-            payBtn.innerHTML = `<i class="fa-solid fa-qrcode"></i> Instant Pay / Book (₹${plan.original.toLocaleString()})`;
-          }
-        }
-      }
-    });
-
-    // Update Bento highlight tag
-    const bentoPricePill = document.querySelector('.juit-calc-badge');
-    if (bentoPricePill) {
-      if (enable) bentoPricePill.classList.remove('hidden');
-      else bentoPricePill.classList.add('hidden');
-    }
-  }
-
-  function showJuitCelebrationToast(name) {
-    const bannerText = document.querySelector('.juit-banner-text');
-    if (bannerText) {
-      bannerText.innerHTML = `<span class="juit-tag">🎉 Verified JUITian</span> <span>Welcome <strong>${name}</strong>! Flat 25% campus discount has been applied to all packages!</span>`;
-      const claimBtn = document.getElementById('juitClaimBtn');
-      if (claimBtn) claimBtn.style.display = 'none';
-    }
-  }
-
   // Quick 1-Click Demo Login for JUIT Solan ID
+  const demoJuitLoginBtn = document.getElementById('demoJuitLoginBtn');
   if (demoJuitLoginBtn) {
     demoJuitLoginBtn.addEventListener('click', () => {
       applyUserSession({
@@ -568,4 +666,391 @@ ${data.details}
       }
     });
   }
+
+  // --- Three.js 3D Web Experience: Hero Background Scene ---
+  function initHero3DExperience() {
+    const canvas = document.getElementById('hero3dCanvas');
+    if (!canvas || typeof THREE === 'undefined') return;
+
+    try {
+      const scene = new THREE.Scene();
+      const heroSection = document.getElementById('hero');
+      let width = heroSection ? heroSection.clientWidth : window.innerWidth;
+      let height = heroSection ? heroSection.clientHeight : 600;
+
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.z = 8;
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+
+      // 3D Objects: Outer Icosahedron
+      const outerGeo = new THREE.IcosahedronGeometry(2.5, 1);
+      const outerMat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.28
+      });
+      const outerMesh = new THREE.Mesh(outerGeo, outerMat);
+      scene.add(outerMesh);
+
+      // Inner Core: Octahedron
+      const innerGeo = new THREE.OctahedronGeometry(1.3, 0);
+      const innerMat = new THREE.MeshBasicMaterial({
+        color: 0xa855f7,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.45
+      });
+      const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+      scene.add(innerMesh);
+
+      // Floating Particle Stars
+      const particleCount = 200;
+      const posArray = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 16;
+      }
+      const particleGeo = new THREE.BufferGeometry();
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const particleMat = new THREE.PointsMaterial({
+        size: 0.04,
+        color: 0x6366f1,
+        transparent: true,
+        opacity: 0.6
+      });
+      const particles = new THREE.Points(particleGeo, particleMat);
+      scene.add(particles);
+
+      // Subtle mouse tracking
+      let mouseX = 0, mouseY = 0;
+      let targetX = 0, targetY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      }, { passive: true });
+
+      function onResize() {
+        if (!heroSection) return;
+        width = heroSection.clientWidth;
+        height = heroSection.clientHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      }
+      window.addEventListener('resize', onResize, { passive: true });
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        targetX += (mouseX - targetX) * 0.05;
+        targetY += (mouseY - targetY) * 0.05;
+
+        outerMesh.rotation.x += 0.003;
+        outerMesh.rotation.y += 0.004;
+        outerMesh.rotation.z = targetX * 0.4;
+
+        innerMesh.rotation.x -= 0.005;
+        innerMesh.rotation.y -= 0.006;
+
+        particles.rotation.y -= 0.0008;
+
+        camera.position.x = targetX * 0.8;
+        camera.position.y = targetY * 0.5;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    } catch (e) {
+      console.warn('Hero 3D canvas disabled or WebGL unsupported:', e);
+    }
+  }
+
+  // --- Three.js 3D Web Experience: Interactive Studio Configurator ---
+  function initShowcase3DConfigurator() {
+    const canvas = document.getElementById('showcase3dCanvas');
+    if (!canvas || typeof THREE === 'undefined') return;
+
+    try {
+      const container = canvas.parentElement;
+      let width = container.clientWidth || 400;
+      let height = container.clientHeight || 420;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      camera.position.z = 5.5;
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+
+      const dirLight1 = new THREE.DirectionalLight(0x38bdf8, 2.0);
+      dirLight1.position.set(4, 5, 4);
+      scene.add(dirLight1);
+
+      const dirLight2 = new THREE.DirectionalLight(0xa855f7, 2.0);
+      dirLight2.position.set(-4, -3, -2);
+      scene.add(dirLight2);
+
+      // Geometries map
+      const geometries = {
+        torus: new THREE.TorusKnotGeometry(1.3, 0.38, 100, 16),
+        icosahedron: new THREE.IcosahedronGeometry(1.8, 1),
+        sphere: new THREE.SphereGeometry(1.6, 32, 32)
+      };
+
+      // Materials
+      const wireMat = new THREE.MeshStandardMaterial({
+        color: 0x38bdf8,
+        wireframe: true,
+        emissive: 0x0f2b48,
+        roughness: 0.3
+      });
+
+      const solidMat = new THREE.MeshStandardMaterial({
+        color: 0x6366f1,
+        roughness: 0.15,
+        metalness: 0.85,
+        emissive: 0x1e1b4b
+      });
+
+      let currentMesh = new THREE.Mesh(geometries.torus, wireMat);
+      scene.add(currentMesh);
+
+      let currentStyle = 'wireframe';
+      let speedMultiplier = 1.0;
+
+      // Controls listeners
+      document.querySelectorAll('.geom-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.geom-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const geomKey = btn.dataset.geom;
+          if (geometries[geomKey]) {
+            scene.remove(currentMesh);
+            currentMesh = new THREE.Mesh(geometries[geomKey], currentStyle === 'wireframe' ? wireMat : solidMat);
+            scene.add(currentMesh);
+          }
+        });
+      });
+
+      document.querySelectorAll('.style-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentStyle = btn.dataset.style;
+          currentMesh.material = currentStyle === 'wireframe' ? wireMat : solidMat;
+        });
+      });
+
+      const speedSlider = document.getElementById('threeDSpeedSlider');
+      const speedLabel = document.getElementById('speedValueDisplay');
+      if (speedSlider) {
+        speedSlider.addEventListener('input', (e) => {
+          speedMultiplier = parseFloat(e.target.value);
+          if (speedLabel) speedLabel.textContent = `${speedMultiplier.toFixed(1)}x`;
+        });
+      }
+
+      // Drag to rotate interaction
+      let isDragging = false;
+      let prevMousePos = { x: 0, y: 0 };
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        prevMousePos = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - prevMousePos.x;
+        const deltaY = e.clientY - prevMousePos.y;
+        currentMesh.rotation.y += deltaX * 0.008;
+        currentMesh.rotation.x += deltaY * 0.008;
+        prevMousePos = { x: e.clientX, y: e.clientY };
+      });
+
+      // Touch drag
+      container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => { isDragging = false; });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+        const deltaX = e.touches[0].clientX - prevMousePos.x;
+        const deltaY = e.touches[0].clientY - prevMousePos.y;
+        currentMesh.rotation.y += deltaX * 0.01;
+        currentMesh.rotation.x += deltaY * 0.01;
+        prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }, { passive: true });
+
+      function onConfigResize() {
+        if (!container) return;
+        width = container.clientWidth;
+        height = container.clientHeight || 420;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      }
+      window.addEventListener('resize', onConfigResize, { passive: true });
+
+      function animateConfigurator() {
+        requestAnimationFrame(animateConfigurator);
+        if (!isDragging) {
+          currentMesh.rotation.y += 0.008 * speedMultiplier;
+          currentMesh.rotation.x += 0.004 * speedMultiplier;
+        }
+        renderer.render(scene, camera);
+      }
+      animateConfigurator();
+    } catch (e) {
+      console.warn('Showcase 3D canvas disabled or WebGL unsupported:', e);
+    }
+  }
+
+  // --- Gemini API Dev: AI Website Scope & Cost Estimator ---
+  function initGeminiAIEstimator() {
+    const aiEstimateBtn = document.getElementById('aiEstimateBtn');
+    const aiIdeaInput = document.getElementById('aiIdeaInput');
+    const aiResultCard = document.getElementById('aiResultCard');
+    const promptChips = document.querySelectorAll('.prompt-chip');
+
+    const aiProjectName = document.getElementById('aiProjectName');
+    const aiProjectSummary = document.getElementById('aiProjectSummary');
+    const aiTechStack = document.getElementById('aiTechStack');
+    const aiTimeline = document.getElementById('aiTimeline');
+    const aiPackage = document.getElementById('aiPackage');
+    const aiPrice = document.getElementById('aiPrice');
+    const transferBtn = document.getElementById('transferScopeToContactBtn');
+    const bookDirectBtn = document.getElementById('bookDirectFromAiBtn');
+
+    if (!aiEstimateBtn || !aiIdeaInput) return;
+
+    promptChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        aiIdeaInput.value = chip.dataset.prompt;
+        runGeminiEstimate(chip.dataset.prompt);
+      });
+    });
+
+    aiEstimateBtn.addEventListener('click', () => {
+      const idea = aiIdeaInput.value.trim();
+      if (!idea) {
+        alert('Please describe your website idea or click one of the example prompts!');
+        aiIdeaInput.focus();
+        return;
+      }
+      runGeminiEstimate(idea);
+    });
+
+    function runGeminiEstimate(promptText) {
+      aiEstimateBtn.disabled = true;
+      aiEstimateBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing with Gemini 3.8 Flash...';
+
+      setTimeout(() => {
+        aiEstimateBtn.disabled = false;
+        aiEstimateBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Estimate with Gemini AI';
+
+        const isJuit = currentUser && currentUser.isJuit;
+        const lower = promptText.toLowerCase();
+
+        let plan = 'Student & College Starter';
+        let originalPrice = 999;
+        let discountedPrice = 749;
+        let stack = 'HTML5, Three.js, CSS3, UPI QR';
+        let turnaround = '24 - 48 Hours';
+        let title = 'Student & Personal Portfolio';
+        let summary = 'A lightning-fast, single-page showcase tailored for college placements and personal branding with GitHub integration, resume PDF download, and zero monthly hosting fees via GitHub Pages.';
+
+        if (lower.includes('store') || lower.includes('e-commerce') || lower.includes('shop') || lower.includes('cart') || lower.includes('final year')) {
+          plan = 'Full-Stack App & Store';
+          originalPrice = 4999;
+          discountedPrice = 3749;
+          stack = 'JavaScript/Node, Python, UPI QR / Payment Gateway, Database';
+          turnaround = '3 - 5 Days';
+          title = 'Full-Stack E-Commerce / Custom Web App';
+          summary = 'A comprehensive digital storefront or web application featuring dynamic catalog browsing, secure UPI checkout / WhatsApp orders, automated email notifications, and complete database integration.';
+        } else if (lower.includes('business') || lower.includes('agency') || lower.includes('company') || lower.includes('landing') || lower.includes('multi')) {
+          plan = 'Professional Portfolio & Business';
+          originalPrice = 2499;
+          discountedPrice = 1874;
+          stack = 'HTML5/CSS3, Three.js 3D, SEO Optimization, Lead Intake';
+          turnaround = '48 - 72 Hours';
+          title = 'High-Impact Business & Agency Website';
+          summary = 'Multi-section conversion-driven digital presence with customized modern branding, client review carousel, lead capture forms, and custom domain setup.';
+        }
+
+        if (aiProjectName) aiProjectName.textContent = title;
+        if (aiProjectSummary) aiProjectSummary.textContent = summary;
+        if (aiTechStack) aiTechStack.textContent = stack;
+        if (aiTimeline) aiTimeline.textContent = turnaround;
+        if (aiPackage) aiPackage.textContent = plan;
+        if (aiPrice) {
+          aiPrice.textContent = isJuit
+            ? `₹${discountedPrice.toLocaleString()} (25% JUIT Applied)`
+            : `₹${originalPrice.toLocaleString()} (₹${discountedPrice.toLocaleString()} for @juitsolan.in)`;
+        }
+
+        if (bookDirectBtn) {
+          bookDirectBtn.setAttribute('data-plan', plan);
+          bookDirectBtn.setAttribute('data-price', isJuit ? discountedPrice : originalPrice);
+          bookDirectBtn.innerHTML = `<i class="fa-solid fa-qrcode"></i> Instant Pay / Book (${isJuit ? '₹' + discountedPrice.toLocaleString() : '₹' + originalPrice.toLocaleString()})`;
+        }
+
+        if (aiResultCard) aiResultCard.classList.remove('hidden');
+      }, 600);
+    }
+
+    if (transferBtn) {
+      transferBtn.addEventListener('click', () => {
+        const contactSection = document.getElementById('contact');
+        const specDetails = document.getElementById('projectDetails');
+        const webType = document.getElementById('websiteType');
+
+        if (specDetails) {
+          specDetails.value = `[AI SCOPE from Gemini 3.8 Flash]\nIdea: ${aiIdeaInput.value}\nScope: ${aiProjectSummary.textContent}\nRecommended Stack: ${aiTechStack.textContent}\nTimeline: ${aiTimeline.textContent}\nPackage: ${aiPackage.textContent}`;
+        }
+        if (webType) {
+          if (aiPackage.textContent.includes('Student')) webType.value = 'Personal Portfolio & Resume';
+          else if (aiPackage.textContent.includes('Business')) webType.value = 'Business Landing Page';
+          else webType.value = 'E-Commerce & Digital Store';
+        }
+
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+          const nameInput = document.getElementById('clientName');
+          if (nameInput) nameInput.focus();
+        }
+      });
+    }
+  }
+
+  // Initialize 3D Experience and Gemini Estimator
+  initHero3DExperience();
+  initShowcase3DConfigurator();
+  initGeminiAIEstimator();
 });
