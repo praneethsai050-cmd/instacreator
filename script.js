@@ -103,6 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const navUserAvatar = document.getElementById('navUserAvatar');
   const navJuitBadge = document.getElementById('navJuitBadge');
 
+  const googleQuickLoginBtn = document.getElementById('googleQuickLoginBtn');
+  const continueAsGuestBtn = document.getElementById('continueAsGuestBtn');
+
   function openAuthModal() {
     if (authModalOverlay) authModalOverlay.classList.remove('hidden');
   }
@@ -115,10 +118,40 @@ document.addEventListener('DOMContentLoaded', () => {
   if (juitClaimBtn) juitClaimBtn.addEventListener('click', openAuthModal);
   if (closeAuthModal) closeAuthModal.addEventListener('click', closeAuthModalDialog);
 
+  if (continueAsGuestBtn) {
+    continueAsGuestBtn.addEventListener('click', () => {
+      sessionStorage.setItem('domyosite_guest_dismissed', 'true');
+      closeAuthModalDialog();
+    });
+  }
+
   if (authModalOverlay) {
     authModalOverlay.addEventListener('click', (e) => {
       if (e.target === authModalOverlay) closeAuthModalDialog();
     });
+  }
+
+  // Google Quick Sign-In Handler
+  if (googleQuickLoginBtn) {
+    googleQuickLoginBtn.addEventListener('click', () => {
+      // If user clicks Google login, prompt for email with suggestion
+      const promptEmail = prompt("Sign In with Google Account:\nEnter your email (e.g. rahul@juitsolan.in for 25% discount, or @gmail.com):", "rahul@juitsolan.in");
+      if (promptEmail && promptEmail.trim()) {
+        const email = promptEmail.trim();
+        const name = email.split('@')[0];
+        applyUserSession({
+          name: name.charAt(0).toUpperCase() + name.slice(1),
+          email: email
+        });
+      }
+    });
+  }
+
+  // Automatically present the enhanced login gate first for new visitors
+  if (!currentUser && sessionStorage.getItem('domyosite_guest_dismissed') !== 'true') {
+    setTimeout(() => {
+      openAuthModal();
+    }, 350);
   }
 
   function applyUserSession(user) {

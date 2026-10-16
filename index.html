@@ -1042,40 +1042,59 @@
     </div>
   </div>
 
-  <!-- Google Authentication Modal -->
+  <!-- Enhanced Welcome & Login Gateway Modal (Opens First for New Visitors) -->
   <div class="modal-overlay hidden" id="authModalOverlay">
-    <div class="modal-dialog auth-modal">
-      <button class="modal-close" id="closeAuthModal">&times;</button>
-      <div class="modal-header">
-        <div class="auth-icon-badge"><i class="fa-brands fa-google"></i></div>
-        <h3 class="modal-title">Sign In with Google</h3>
-        <p class="modal-subtitle">Sign in to unlock exclusive campus discounts, track orders, and save your project specs.</p>
+    <div class="modal-dialog auth-modal enhanced-gate">
+      <button class="modal-close" id="closeAuthModal" aria-label="Close modal">&times;</button>
+      
+      <!-- Studio Welcome Header -->
+      <div class="gate-header">
+        <div class="gate-brand">
+          <span class="logo-symbol">&lt;/&gt;</span>
+          <span class="logo-text">DoMyO<span class="accent-text">Site</span></span>
+        </div>
+        <span class="gate-byline">By Praneeth Sai • Web Development Studio</span>
+        <h2 class="gate-title">Welcome! Sign in to get started.</h2>
+        <p class="gate-desc">Unlock instant quotes, direct 1-on-1 developer booking, and our exclusive <strong>25% JUIT Solan Campus Discount</strong>.</p>
       </div>
 
-      <!-- JUIT Solan Highlight Box -->
+      <!-- JUIT Solan Highlight Banner Card -->
       <div class="juit-promo-card">
         <div class="juit-card-header">
-          <span class="juit-badge-pill">🎓 Jaypee University (JUIT)</span>
-          <span class="discount-pill">25% OFF</span>
+          <span class="juit-badge-pill"><i class="fa-solid fa-graduation-cap"></i> JUIT Waknaghat Offer</span>
+          <span class="discount-pill">25% FLAT OFF</span>
         </div>
-        <p>Are you a student or faculty at JUIT Solan? Sign in with your <strong>@juitsolan.in</strong> email to get an automatic <strong>25% discount</strong> on all website packages!</p>
+        <p>Students & faculty with <strong>@juitsolan.in</strong> emails get <strong>Flat 25% OFF</strong> on all websites & student portfolios!</p>
       </div>
 
-      <!-- Quick JUIT Instant Demo Button -->
+      <!-- Primary Action Buttons -->
       <div class="auth-actions">
+        <!-- 1-Click JUIT Quick Login -->
         <button type="button" class="btn btn-juit-demo full-width" id="demoJuitLoginBtn">
-          <i class="fa-solid fa-graduation-cap"></i> Quick Sign-In with JUIT Solan ID (@juitsolan.in)
+          <i class="fa-solid fa-graduation-cap"></i> Sign In with JUIT Solan ID (@juitsolan.in)
+        </button>
+
+        <!-- Google Sign In Button -->
+        <button type="button" class="btn btn-google-full full-width" id="googleQuickLoginBtn">
+          <i class="fa-brands fa-google"></i> Continue with Google Account
         </button>
         
-        <div class="auth-divider"><span>OR REGULAR SIGN IN</span></div>
+        <div class="auth-divider"><span>OR USE EMAIL</span></div>
 
         <div class="form-group">
-          <label for="authEmailInput">Enter Your Email Address:</label>
-          <input type="email" id="authEmailInput" placeholder="yourname@gmail.com or @juitsolan.in">
+          <label for="authEmailInput">Your Email Address:</label>
+          <input type="email" id="authEmailInput" placeholder="e.g. rahul@juitsolan.in or yourname@gmail.com">
         </div>
         <button type="button" class="btn btn-primary full-width" id="submitEmailAuthBtn">
           <i class="fa-solid fa-arrow-right-to-bracket"></i> Continue with Email
         </button>
+
+        <!-- Guest Browse Option -->
+        <div class="gate-guest-row">
+          <button type="button" class="btn-guest-link" id="continueAsGuestBtn">
+            Skip for now &amp; explore portfolio as Guest <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
