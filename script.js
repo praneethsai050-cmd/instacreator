@@ -73,17 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   packageButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const selectedPkg = btn.getAttribute('data-package');
+      const selectedPkg = btn.getAttribute('data-package') || '';
       if (websiteTypeSelect) {
-        if (selectedPkg.includes('Landing')) {
-          websiteTypeSelect.value = 'Business Landing Page';
-          if (budgetSelect) budgetSelect.value = 'Under $100';
+        if (selectedPkg.includes('Student') || selectedPkg.includes('Starter')) {
+          websiteTypeSelect.value = 'College Project / Event Landing Page';
+          if (budgetSelect) budgetSelect.value = 'Under ₹1,500';
         } else if (selectedPkg.includes('Professional')) {
           websiteTypeSelect.value = 'Personal Portfolio & Resume';
-          if (budgetSelect) budgetSelect.value = '$100 - $250';
+          if (budgetSelect) budgetSelect.value = '₹1,500 - ₹3,500';
         } else if (selectedPkg.includes('Store') || selectedPkg.includes('App')) {
           websiteTypeSelect.value = 'Custom Web Application';
-          if (budgetSelect) budgetSelect.value = '$250 - $500';
+          if (budgetSelect) budgetSelect.value = '₹3,500 - ₹7,500';
         }
       }
     });
