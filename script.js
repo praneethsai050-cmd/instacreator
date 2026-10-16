@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const JUIT_DISCOUNT_PERCENT = 25; // 25% Flat Discount for JUIT Waknaghat students
 
   // --- State Management ---
-  let currentUser = JSON.parse(localStorage.getItem('domyosite_user')) || null;
   let activePaymentOrder = {
     planName: 'Student & College Starter',
     basePrice: 999,
@@ -78,297 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- JUIT Solan Promo Banner & Claim Button ---
+  // --- JUIT Solan Promo Banner ---
   const juitBanner = document.getElementById('juitBanner');
   const closeJuitBanner = document.getElementById('closeJuitBanner');
-  const juitClaimBtn = document.getElementById('juitClaimBtn');
 
   if (closeJuitBanner && juitBanner) {
     closeJuitBanner.addEventListener('click', () => {
       juitBanner.classList.add('hidden');
     });
-  }
-
-  // --- Satyameva-Style Authentication & JUIT Campus Discount System ---
-  const loginBtn = document.getElementById('loginBtn');
-  const signOutBtn = document.getElementById('signOutBtn');
-  const authModalOverlay = document.getElementById('authModalOverlay');
-  const closeAuthModal = document.getElementById('closeAuthModal');
-  const userProfilePill = document.getElementById('userProfilePill');
-  const navUserName = document.getElementById('navUserName');
-  const navUserAvatar = document.getElementById('navUserAvatar');
-  const navJuitBadge = document.getElementById('navJuitBadge');
-  const continueAsGuestBtn = document.getElementById('continueAsGuestBtn');
-
-  // Screen Switching Logic (Satyameva pattern)
-  window.showAuthScreen = function(screenName) {
-    const screens = ['login', 'signup', 'otp'];
-    screens.forEach(s => {
-      const el = document.getElementById(`screen-${s}`);
-      if (el) el.classList.add('hidden');
-    });
-    const target = document.getElementById(`screen-${screenName}`);
-    if (target) {
-      target.classList.remove('hidden');
-      const err = target.querySelector('.error-div');
-      if (err) {
-        err.classList.add('hidden');
-        err.textContent = '';
-      }
-    }
-  };
-
-  function openAuthModal(defaultScreen = 'login') {
-    if (authModalOverlay) {
-      authModalOverlay.classList.remove('hidden');
-      window.showAuthScreen(defaultScreen);
-    }
-  }
-
-  function closeAuthModalDialog() {
-    if (authModalOverlay) authModalOverlay.classList.add('hidden');
-  }
-
-  if (loginBtn) loginBtn.addEventListener('click', () => openAuthModal('login'));
-  if (juitClaimBtn) juitClaimBtn.addEventListener('click', () => openAuthModal('login'));
-  if (closeAuthModal) closeAuthModal.addEventListener('click', closeAuthModalDialog);
-
-  if (continueAsGuestBtn) {
-    continueAsGuestBtn.addEventListener('click', () => {
-      sessionStorage.setItem('domyosite_guest_dismissed', 'true');
-      closeAuthModalDialog();
-    });
-  }
-
-  if (authModalOverlay) {
-    authModalOverlay.addEventListener('click', (e) => {
-      if (e.target === authModalOverlay) closeAuthModalDialog();
-    });
-  }
-
-  // Switch links
-  const toSignupLink = document.getElementById('toSignupLink');
-  const toLoginLink = document.getElementById('toLoginLink');
-  const backToLoginFromOtp = document.getElementById('backToLoginFromOtp');
-  const resendOtpBtn = document.getElementById('resendOtpBtn');
-
-  if (toSignupLink) toSignupLink.addEventListener('click', (e) => { e.preventDefault(); window.showAuthScreen('signup'); });
-  if (toLoginLink) toLoginLink.addEventListener('click', (e) => { e.preventDefault(); window.showAuthScreen('login'); });
-  if (backToLoginFromOtp) backToLoginFromOtp.addEventListener('click', (e) => { e.preventDefault(); window.showAuthScreen('login'); });
-  if (resendOtpBtn) resendOtpBtn.addEventListener('click', () => {
-    alert('Verification code resent: 123456');
-    const firstDigit = document.querySelector('.otp-digit');
-    if (firstDigit) firstDigit.focus();
-  });
-
-  // Pre-fill demo buttons (Satyameva pattern)
-  const fillStudioDemoBtn = document.getElementById('fillStudioDemoBtn');
-  const fillJuitDemoBtn = document.getElementById('fillJuitDemoBtn');
-  if (fillStudioDemoBtn) {
-    fillStudioDemoBtn.addEventListener('click', () => {
-      const email = document.getElementById('login-email');
-      const pass = document.getElementById('login-password');
-      if (email) email.value = 'domyosite@gmail.com';
-      if (pass) pass.value = 'domyo123';
-    });
-  }
-  if (fillJuitDemoBtn) {
-    fillJuitDemoBtn.addEventListener('click', () => {
-      const email = document.getElementById('login-email');
-      const pass = document.getElementById('login-password');
-      if (email) email.value = 'rahul@juitsolan.in';
-      if (pass) pass.value = 'juit123';
-    });
-  }
-
-  // Pending user state for OTP step
-  let pendingAuthUser = null;
-
-  // Login handler
-  window.handleSatyamevaLogin = function() {
-    const emailInput = document.getElementById('login-email');
-    const errDiv = document.getElementById('login-error');
-
-    if (!emailInput || !emailInput.value.trim() || !emailInput.value.includes('@')) {
-      if (errDiv) {
-        errDiv.textContent = 'Please enter a valid email address.';
-        errDiv.classList.remove('hidden');
-      }
-      return;
-    }
-
-    const email = emailInput.value.trim().toLowerCase();
-    const namePart = email.split('@')[0];
-    const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
-
-    pendingAuthUser = {
-      email: email,
-      name: email === 'domyosite@gmail.com' ? 'Praneeth (Studio Admin)' : displayName,
-      isJuit: email.endsWith('@juitsolan.in')
-    };
-
-    window.showAuthScreen('otp');
-    setTimeout(() => {
-      const firstDigit = document.querySelector('.otp-digit');
-      if (firstDigit) firstDigit.focus();
-    }, 150);
-  };
-
-  // Signup handler
-  window.handleSatyamevaSignup = function() {
-    const nameInput = document.getElementById('signup-name');
-    const emailInput = document.getElementById('signup-email');
-    const passInput = document.getElementById('signup-password');
-    const confirmInput = document.getElementById('signup-confirm');
-    const errDiv = document.getElementById('signup-error');
-
-    const name = nameInput ? nameInput.value.trim() : '';
-    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
-    const pass = passInput ? passInput.value : '';
-    const confirm = confirmInput ? confirmInput.value : '';
-
-    if (!name || !email.includes('@')) {
-      if (errDiv) { errDiv.textContent = 'Please provide your full name and valid email.'; errDiv.classList.remove('hidden'); }
-      return;
-    }
-    if (pass.length < 6) {
-      if (errDiv) { errDiv.textContent = 'Password must be at least 6 characters.'; errDiv.classList.remove('hidden'); }
-      return;
-    }
-    if (pass !== confirm) {
-      if (errDiv) { errDiv.textContent = 'Passwords do not match.'; errDiv.classList.remove('hidden'); }
-      return;
-    }
-
-    pendingAuthUser = {
-      name: name,
-      email: email,
-      isJuit: email.endsWith('@juitsolan.in')
-    };
-
-    window.showAuthScreen('otp');
-    setTimeout(() => {
-      const firstDigit = document.querySelector('.otp-digit');
-      if (firstDigit) firstDigit.focus();
-    }, 150);
-  };
-
-  // OTP Verification handler
-  window.handleSatyamevaVerifyOTP = function() {
-    const digitInputs = document.querySelectorAll('.otp-digit');
-    const otp = Array.from(digitInputs).map(d => d.value.trim()).join('');
-    const errDiv = document.getElementById('otp-error');
-
-    if (otp.length < 6) {
-      if (errDiv) {
-        errDiv.textContent = 'Please enter all 6 digits of the verification code.';
-        errDiv.classList.remove('hidden');
-      }
-      return;
-    }
-
-    if (otp === '123456' || otp.length === 6) {
-      const user = pendingAuthUser || {
-        name: 'DoMyOSite Client',
-        email: 'domyosite@gmail.com',
-        isJuit: false
-      };
-      applyUserSession(user);
-      digitInputs.forEach(d => d.value = '');
-    } else {
-      if (errDiv) {
-        errDiv.textContent = 'Invalid verification code. Please enter demo OTP: 123456';
-        errDiv.classList.remove('hidden');
-      }
-    }
-  };
-
-  // OTP keyboard auto-advancing
-  const otpDigits = document.querySelectorAll('.otp-digit');
-  otpDigits.forEach((digit, idx) => {
-    digit.addEventListener('input', () => {
-      if (digit.value.length >= 1) {
-        digit.value = digit.value.slice(-1);
-        if (idx < otpDigits.length - 1) {
-          otpDigits[idx + 1].focus();
-        }
-      }
-    });
-
-    digit.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !digit.value && idx > 0) {
-        otpDigits[idx - 1].focus();
-      }
-    });
-
-    digit.addEventListener('paste', (e) => {
-      e.preventDefault();
-      const pasteData = (e.clipboardData || window.clipboardData).getData('text').trim();
-      if (/^\d{6}$/.test(pasteData)) {
-        pasteData.split('').forEach((char, i) => {
-          if (otpDigits[i]) otpDigits[i].value = char;
-        });
-        window.handleSatyamevaVerifyOTP();
-      }
-    });
-  });
-
-  // Google Quick Sign-In Handler
-  const googleQuickLoginBtn = document.getElementById('googleQuickLoginBtn');
-  if (googleQuickLoginBtn) {
-    googleQuickLoginBtn.addEventListener('click', () => {
-      const promptEmail = prompt("Sign In with Google Account:\nEnter your email (e.g. rahul@juitsolan.in for 25% discount, or domyosite@gmail.com):", "rahul@juitsolan.in");
-      if (promptEmail && promptEmail.trim()) {
-        const email = promptEmail.trim();
-        const name = email.split('@')[0];
-        applyUserSession({
-          name: name.charAt(0).toUpperCase() + name.slice(1),
-          email: email
-        });
-      }
-    });
-  }
-
-  // Quick 1-Click Demo Login for JUIT Solan ID
-  const demoJuitLoginBtn = document.getElementById('demoJuitLoginBtn');
-  if (demoJuitLoginBtn) {
-    demoJuitLoginBtn.addEventListener('click', () => {
-      applyUserSession({
-        name: 'Praneeth (JUITian)',
-        email: 'praneeth@juitsolan.in',
-        isJuit: true
-      });
-    });
-  }
-
-  // Custom email login handler
-  if (submitEmailAuthBtn && authEmailInput) {
-    submitEmailAuthBtn.addEventListener('click', () => {
-      const email = authEmailInput.value.trim();
-      if (!email || !email.includes('@')) {
-        alert('Please enter a valid email address.');
-        return;
-      }
-      const name = email.split('@')[0];
-      applyUserSession({ name, email });
-    });
-  }
-
-  // Sign out handler
-  if (signOutBtn) {
-    signOutBtn.addEventListener('click', () => {
-      currentUser = null;
-      localStorage.removeItem('domyosite_user');
-      if (loginBtn) loginBtn.style.display = 'inline-flex';
-      if (userProfilePill) userProfilePill.classList.add('hidden');
-      applyJuitPricingDiscount(false);
-      alert('Signed out successfully.');
-    });
-  }
-
-  // Check saved session on startup
-  if (currentUser) {
-    applyUserSession(currentUser);
   }
 
   // --- Interactive Pay Layout & Checkout Modal ---
@@ -379,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const payDiscountRow = document.getElementById('payDiscountRow');
   const payDiscountAmount = document.getElementById('payDiscountAmount');
   const payFinalTotal = document.getElementById('payFinalTotal');
+  const juitDiscountToggle = document.getElementById('juitDiscountToggle');
   const dynamicUpiQr = document.getElementById('dynamicUpiQr');
   const gpayDeepLink = document.getElementById('gpayDeepLink');
   const phonepeDeepLink = document.getElementById('phonepeDeepLink');
@@ -387,29 +104,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
   const utrRefInput = document.getElementById('utrRefInput');
 
-  function openPaymentModal(planName, price) {
-    const basePrice = parseInt(price, 10);
-    const isJuit = currentUser && currentUser.isJuit;
+  function updatePaymentTotals(applyJuit) {
+    const basePrice = activePaymentOrder.basePrice;
     let finalPrice = basePrice;
     let discount = 0;
 
-    if (isJuit) {
+    if (applyJuit) {
       discount = Math.round(basePrice * 0.25);
       finalPrice = basePrice - discount;
     }
 
-    activePaymentOrder = {
-      planName,
-      basePrice,
-      finalPrice,
-      isJuitDiscount: isJuit
-    };
-
-    if (payPlanName) payPlanName.textContent = planName;
-    if (payOriginalPrice) payOriginalPrice.textContent = `₹${basePrice.toLocaleString()}`;
+    activePaymentOrder.finalPrice = finalPrice;
+    activePaymentOrder.isJuitDiscount = applyJuit;
 
     if (payDiscountRow) {
-      if (isJuit) {
+      if (applyJuit) {
         payDiscountRow.classList.remove('hidden');
         if (payDiscountAmount) payDiscountAmount.textContent = `- ₹${discount.toLocaleString()}`;
       } else {
@@ -420,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (payFinalTotal) payFinalTotal.textContent = `₹${finalPrice.toLocaleString()}`;
 
     // Generate Standard UPI String
-    const upiUri = `upi://pay?pa=${encodeURIComponent(PRIMARY_UPI_ID)}&pn=${encodeURIComponent('Praneeth Sai (DoMyOSite)')}&am=${finalPrice}&cu=INR&tn=${encodeURIComponent(planName.substring(0, 20))}`;
+    const upiUri = `upi://pay?pa=${encodeURIComponent(PRIMARY_UPI_ID)}&pn=${encodeURIComponent('Praneeth Sai (DoMyOSite)')}&am=${finalPrice}&cu=INR&tn=${encodeURIComponent(activePaymentOrder.planName.substring(0, 20))}`;
 
     // Dynamic QR Code generation using public QR server API
     if (dynamicUpiQr) {
@@ -432,12 +141,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gpayDeepLink) gpayDeepLink.href = upiUri;
     if (phonepeDeepLink) phonepeDeepLink.href = upiUri;
     if (paytmDeepLink) paytmDeepLink.href = upiUri;
+  }
+
+  function openPaymentModal(planName, price) {
+    const basePrice = parseInt(price, 10) || 999;
+    activePaymentOrder.planName = planName;
+    activePaymentOrder.basePrice = basePrice;
+
+    if (payPlanName) payPlanName.textContent = planName;
+    if (payOriginalPrice) payOriginalPrice.textContent = `₹${basePrice.toLocaleString()}`;
+
+    const applyJuit = juitDiscountToggle ? juitDiscountToggle.checked : false;
+    updatePaymentTotals(applyJuit);
 
     if (paymentModalOverlay) paymentModalOverlay.classList.remove('hidden');
   }
 
   function closePaymentModalDialog() {
     if (paymentModalOverlay) paymentModalOverlay.classList.add('hidden');
+  }
+
+  if (juitDiscountToggle) {
+    juitDiscountToggle.addEventListener('change', () => {
+      updatePaymentTotals(juitDiscountToggle.checked);
+    });
   }
 
   // Attach click listeners to all "Book Online" and "Instant Pay" triggers
@@ -491,15 +218,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (confirmPaymentBtn) {
     confirmPaymentBtn.addEventListener('click', () => {
       const utr = (utrRefInput ? utrRefInput.value.trim() : '') || 'Pending Verification';
-      const clientName = (currentUser ? currentUser.name : 'Valued Client');
-      const clientEmail = (currentUser ? currentUser.email : 'Not logged in');
 
       const msg = `*Payment Confirmation - DoMyOSite* 💳
 ----------------------------------------
-*Client:* ${clientName} (${clientEmail})
 *Plan Booked:* ${activePaymentOrder.planName}
 *Total Paid:* ₹${activePaymentOrder.finalPrice.toLocaleString()}
-*JUIT Discount:* ${activePaymentOrder.isJuitDiscount ? 'Yes (25% Applied)' : 'No'}
+*JUIT Campus Discount:* ${activePaymentOrder.isJuitDiscount ? 'Yes (25% Applied)' : 'No'}
 *Transaction UTR / Ref:* ${utr}
 ----------------------------------------
 Hi Praneeth, I've initiated this payment for my website. Please confirm and let's get started!`;
@@ -589,7 +313,7 @@ Hi Praneeth, I've initiated this payment for my website. Please confirm and let'
     const budget = document.getElementById('budgetRange').value;
     const timeline = document.getElementById('timeline').value;
     const details = document.getElementById('projectDetails').value.trim();
-    const isJuit = (currentUser && currentUser.isJuit) || email.toLowerCase().endsWith('@juitsolan.in');
+    const isJuit = email.toLowerCase().endsWith('@juitsolan.in');
 
     return { name, email, phone, type, budget, timeline, details, isJuit };
   }
@@ -975,7 +699,6 @@ ${data.details}
         aiEstimateBtn.disabled = false;
         aiEstimateBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Estimate with Gemini AI';
 
-        const isJuit = currentUser && currentUser.isJuit;
         const lower = promptText.toLowerCase();
 
         let plan = 'Student & College Starter';
@@ -1010,15 +733,13 @@ ${data.details}
         if (aiTimeline) aiTimeline.textContent = turnaround;
         if (aiPackage) aiPackage.textContent = plan;
         if (aiPrice) {
-          aiPrice.textContent = isJuit
-            ? `₹${discountedPrice.toLocaleString()} (25% JUIT Applied)`
-            : `₹${originalPrice.toLocaleString()} (₹${discountedPrice.toLocaleString()} for @juitsolan.in)`;
+          aiPrice.textContent = `₹${originalPrice.toLocaleString()} (₹${discountedPrice.toLocaleString()} with JUIT Solan discount)`;
         }
 
         if (bookDirectBtn) {
           bookDirectBtn.setAttribute('data-plan', plan);
-          bookDirectBtn.setAttribute('data-price', isJuit ? discountedPrice : originalPrice);
-          bookDirectBtn.innerHTML = `<i class="fa-solid fa-qrcode"></i> Instant Pay / Book (${isJuit ? '₹' + discountedPrice.toLocaleString() : '₹' + originalPrice.toLocaleString()})`;
+          bookDirectBtn.setAttribute('data-price', originalPrice);
+          bookDirectBtn.innerHTML = `<i class="fa-solid fa-qrcode"></i> Instant Pay / Book (₹${originalPrice.toLocaleString()})`;
         }
 
         if (aiResultCard) aiResultCard.classList.remove('hidden');

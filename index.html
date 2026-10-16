@@ -37,8 +37,6 @@
   <!-- Three.js for 3D Web Experience -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-  <!-- Google Identity Services (GSI) for Google Sign-In -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
@@ -52,12 +50,12 @@
     <div class="container juit-banner-content">
       <div class="juit-banner-text">
         <span class="juit-tag">🎓 JUIT Waknaghat Special</span>
-        <span>Students & faculty with <strong>@juitsolan.in</strong> get <strong>Flat 25% OFF</strong> on all websites & portfolios!</span>
+        <span>Students &amp; faculty with <strong>@juitsolan.in</strong> get <strong>Flat 25% OFF</strong> on all websites &amp; portfolios!</span>
       </div>
       <div class="juit-banner-actions">
-        <button id="juitClaimBtn" class="btn btn-juit-claim btn-sm">
-          <i class="fa-brands fa-google"></i> Sign In to Claim 25% Off
-        </button>
+        <a href="#pricing" class="btn btn-juit-claim btn-sm">
+          <i class="fa-solid fa-graduation-cap"></i> View 25% Off Rates
+        </a>
         <button id="closeJuitBanner" class="juit-close" aria-label="Dismiss banner">&times;</button>
       </div>
     </div>
@@ -82,23 +80,6 @@
         <a href="#portfolio" class="nav-link">Work & Repos</a>
         <a href="#process" class="nav-link">Process</a>
         <a href="#pricing" class="nav-link">Packages</a>
-        
-        <!-- Auth & Profile Container -->
-        <div class="nav-auth-container" id="navAuthContainer">
-          <button id="loginBtn" class="btn btn-secondary nav-login-btn">
-            <i class="fa-brands fa-google"></i> Sign In
-          </button>
-          <!-- User pill populated via JS when signed in -->
-          <div id="userProfilePill" class="user-profile-pill hidden">
-            <div class="user-avatar" id="navUserAvatar">U</div>
-            <div class="user-info-text">
-              <span class="user-name" id="navUserName">User</span>
-              <span class="juit-badge-pill hidden" id="navJuitBadge">🎓 25% JUITian</span>
-            </div>
-            <button id="signOutBtn" class="btn-signout" title="Sign Out"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
-          </div>
-        </div>
-
         <a href="#contact" class="btn btn-outline nav-cta">Start Your Project</a>
       </div>
 
@@ -1025,6 +1006,12 @@
           <span class="pay-label"><i class="fa-solid fa-graduation-cap"></i> JUIT Student Discount (25%):</span>
           <span id="payDiscountAmount" class="pay-val text-green">- ₹250</span>
         </div>
+        <div class="pay-juit-toggle-row" style="margin: 0.6rem 0; font-size: 0.85rem;">
+          <label class="juit-toggle-label" for="juitDiscountToggle" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #34d399;">
+            <input type="checkbox" id="juitDiscountToggle" style="width: auto; cursor: pointer; accent-color: #10b981;">
+            <span>🎓 JUIT Solan Student / Faculty (Apply Flat 25% OFF)</span>
+          </label>
+        </div>
         <div class="pay-divider"></div>
         <div class="pay-summary-row total-row">
           <span class="pay-label">Total Payable:</span>
@@ -1107,159 +1094,6 @@
         </div>
         <p class="verify-note"><i class="fa-solid fa-shield-check"></i> Praneeth will confirm your slot and initiate the build immediately upon receipt.</p>
       </div>
-    </div>
-  </div>
-
-  <!-- Satyameva-Inspired Glassmorphism Welcome & Authentication Gateway Modal -->
-  <div class="modal-overlay hidden" id="authModalOverlay">
-    <div class="modal-dialog auth-modal satyameva-auth-card">
-      <button class="modal-close" id="closeAuthModal" aria-label="Close modal">&times;</button>
-      
-      <!-- SCREEN 1: LOGIN SCREEN (Satyameva Inspired) -->
-      <div id="screen-login" class="auth-screen">
-        <div class="auth-card-inner">
-          <div class="auth-logo-center">
-            <h1 class="logo-large font-space">&lt;/&gt; DoMyOSite</h1>
-            <p class="subtitle">Truth. Verified. Built.</p>
-            <div class="badge"><i class="fa-solid fa-code"></i> Web Studio by Praneeth Sai • domyosite@gmail.com</div>
-          </div>
-
-          <!-- JUIT Solan Exclusive Campus Discount Callout -->
-          <div class="juit-promo-card">
-            <div class="juit-card-header">
-              <span class="juit-badge-pill"><i class="fa-solid fa-graduation-cap"></i> JUIT Waknaghat Offer</span>
-              <span class="discount-pill">25% FLAT OFF</span>
-            </div>
-            <p>Students &amp; faculty with <strong>@juitsolan.in</strong> emails get <strong>Flat 25% OFF</strong> automatically!</p>
-          </div>
-
-          <!-- Quick Fill Chips -->
-          <div class="demo-fill-row">
-            <button type="button" class="btn-demo-chip" id="fillStudioDemoBtn" title="Auto-fill official studio email">
-              <i class="fa-solid fa-at"></i> domyosite@gmail.com
-            </button>
-            <button type="button" class="btn-demo-chip juit" id="fillJuitDemoBtn" title="Auto-fill JUIT student email">
-              <i class="fa-solid fa-graduation-cap"></i> rahul@juitsolan.in
-            </button>
-          </div>
-
-          <!-- Login Form -->
-          <form id="form-login" class="auth-form" onsubmit="event.preventDefault(); window.handleSatyamevaLogin();">
-            <div class="form-group">
-              <label for="login-email">Email Address</label>
-              <input type="email" id="login-email" required placeholder="e.g. domyosite@gmail.com or rahul@juitsolan.in">
-            </div>
-            <div class="form-group">
-              <label for="login-password">Password</label>
-              <input type="password" id="login-password" required placeholder="Enter your password (e.g. domyo123)">
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">
-              <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
-            </button>
-            <div id="login-error" class="error-div hidden"></div>
-          </form>
-
-          <div class="auth-divider"><span>OR ONE-CLICK SIGN IN</span></div>
-
-          <!-- 1-Click Alternate Sign-Ins -->
-          <div class="alt-auth-stack">
-            <button type="button" class="btn btn-juit-demo btn-block" id="demoJuitLoginBtn">
-              <i class="fa-solid fa-graduation-cap"></i> Instant Sign In with JUIT ID (@juitsolan.in)
-            </button>
-            <button type="button" class="btn btn-google-full btn-block" id="googleQuickLoginBtn">
-              <i class="fa-brands fa-google"></i> Continue with Google Account
-            </button>
-          </div>
-
-          <p class="switch-auth">
-            Don't have an account? <a href="#" id="toSignupLink">Sign up</a>
-          </p>
-
-          <!-- Guest Browse Option -->
-          <div class="gate-guest-row">
-            <button type="button" class="btn-guest-link" id="continueAsGuestBtn">
-              Skip for now &amp; explore studio as Guest <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- SCREEN 2: SIGNUP SCREEN (Satyameva Inspired) -->
-      <div id="screen-signup" class="auth-screen hidden">
-        <div class="auth-card-inner">
-          <div class="auth-logo-center">
-            <h1 class="logo-large font-space">&lt;/&gt; DoMyOSite</h1>
-            <p class="subtitle">Truth. Verified. Built.</p>
-            <div class="badge"><i class="fa-solid fa-user-plus"></i> Create Client Account</div>
-          </div>
-
-          <!-- Signup Form -->
-          <form id="form-signup" class="auth-form" onsubmit="event.preventDefault(); window.handleSatyamevaSignup();">
-            <div class="form-group">
-              <label for="signup-name">Full Name</label>
-              <input type="text" id="signup-name" required placeholder="e.g. Rahul Sharma">
-            </div>
-            <div class="form-group">
-              <label for="signup-email">Email Address</label>
-              <input type="email" id="signup-email" required placeholder="domyosite@gmail.com or @juitsolan.in">
-              <span class="input-hint">Tip: Use <strong>@juitsolan.in</strong> for automatic 25% discount!</span>
-            </div>
-            <div class="form-group">
-              <label for="signup-password">Password</label>
-              <input type="password" id="signup-password" required placeholder="Create password (min 6 characters)">
-            </div>
-            <div class="form-group">
-              <label for="signup-confirm">Confirm Password</label>
-              <input type="password" id="signup-confirm" required placeholder="Confirm password">
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">
-              <i class="fa-solid fa-user-check"></i> Sign Up
-            </button>
-            <div id="signup-error" class="error-div hidden"></div>
-          </form>
-
-          <p class="switch-auth">
-            Already have an account? <a href="#" id="toLoginLink">Login</a>
-          </p>
-        </div>
-      </div>
-
-      <!-- SCREEN 3: OTP VERIFICATION SCREEN (Satyameva Inspired) -->
-      <div id="screen-otp" class="auth-screen hidden">
-        <div class="auth-card-inner">
-          <div class="auth-logo-center">
-            <h1 class="logo-large font-space">&lt;/&gt; DoMyOSite</h1>
-            <div class="otp-banner">OTP for Demo: <span id="demo-otp">123456</span></div>
-            <p class="subtitle">Enter the 6-digit code sent to your email</p>
-          </div>
-
-          <form id="form-otp" class="auth-form" onsubmit="event.preventDefault(); window.handleSatyamevaVerifyOTP();">
-            <div class="otp-inputs">
-              <input type="text" class="otp-digit" maxlength="1" required inputmode="numeric" autocomplete="one-time-code">
-              <input type="text" class="otp-digit" maxlength="1" required inputmode="numeric">
-              <input type="text" class="otp-digit" maxlength="1" required inputmode="numeric">
-              <input type="text" class="otp-digit" maxlength="1" required inputmode="numeric">
-              <input type="text" class="otp-digit" maxlength="1" required inputmode="numeric">
-              <input type="text" class="otp-digit" maxlength="1" required inputmode="numeric">
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">
-              <i class="fa-solid fa-shield-check"></i> Verify &amp; Continue
-            </button>
-            <div id="otp-error" class="error-div hidden"></div>
-          </form>
-
-          <div class="otp-footer">
-            <button type="button" class="btn-link" id="resendOtpBtn">Resend Code (123456)</button>
-            <span class="sep">•</span>
-            <a href="#" id="backToLoginFromOtp">Back to Login</a>
-          </div>
-
-          <p class="auth-support-note">
-            Official Studio Support: <a href="mailto:domyosite@gmail.com">domyosite@gmail.com</a> | WhatsApp: +91 87776 79256
-          </p>
-        </div>
-      </div>
-
     </div>
   </div>
 
