@@ -983,6 +983,7 @@ a {
 .whatsapp-chip i { color: #25d366; }
 .email-chip i { color: var(--accent-secondary); }
 .github-chip i { color: #fff; }
+.instagram-chip i { color: #e1306c; }
 
 /* Form Container */
 .contact-form-col {
