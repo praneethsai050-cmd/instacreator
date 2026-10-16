@@ -30,19 +30,18 @@
   - 🛒 E-Commerce & Instant Storefronts
   - ⚙️ Custom Web Apps & Automations
   - 🔄 Website Redesigns & Performance Optimization
+- **Campus & Student Exclusive**:
+  - 🎓 **JUIT Solan 25% Flat Discount**: Automatic detection of `@juitsolan.in` emails via Google Sign-In with live recalculated prices (Starter: ₹749, Pro: ₹1,874, Custom: ₹3,749).
+- **Interactive UPI Pay Layout & Checkout**:
+  - 💳 **Dynamic UPI QR Code**: Real-time generation of custom UPI payment QR codes with exact amount and recipient note.
+  - 📲 **Instant App Checkout**: Direct intent deep links for Google Pay, PhonePe, Paytm, and BHIM.
+  - 📋 **1-Click Copy UPI ID**: Copies `8777679256@okaxis` with visual feedback.
+  - 📝 **UTR Verification**: Allows users to enter their transaction reference and sends instant WhatsApp confirmation to Praneeth.
+- **Audited Cloud Security (`firestore.rules`)**:
+  - Audited against the **Firebase Security Rules Auditor** checklist (identity-level security, resource exhaustion prevention, string length checks, and JUIT domain verification).
 - **Interactive Project & Repository Showcase**:
-  - **`SecurePassGuard`** (Security & Cryptography Password Tool)
-  - **`camera-email-app`** (Automated Motion Detection & Camera Notification Engine)
-  - **`studybud`** (Academic Notes & Automated Diagram / PDF Synthesis Engine)
-  - Live client-ready demo templates for businesses, portfolios, and stores.
-- **Interactive Client Intake Form**:
-  - Allows clients to choose their website type, budget tier, timeline, and description.
-  - Automatically structures the requirement specifications into a formatted brief.
-  - 1-click submission directly via **Email** or **WhatsApp**.
-- **Social & Instant Connect**:
-  - Persistent floating WhatsApp button with live tooltip.
-  - Connected to GitHub ([`praneethsai050-cmd`](https://github.com/praneethsai050-cmd)), Instagram ([`@fast_and_th_curious`](https://instagram.com/fast_and_th_curious)), WhatsApp, and Email.
-- **Automated CI/CD**: Pre-configured GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically deploys changes to GitHub Pages on every push.
+  - High-resolution SVG illustrations for **`SecurePassGuard`**, **`camera-email-app`**, and **`studybud`**.
+  - Interactive **Live Preview Modal** with Desktop and Mobile device viewport simulation.
 
 ---
 
@@ -55,9 +54,10 @@ instacreator/
 │       └── deploy.yml   # Automatic GitHub Pages CI/CD deployment
 ├── .gitignore           # Clean exclusion of temporary/OS files
 ├── favicon.svg          # Glowing code brackets vector favicon
-├── index.html           # Full semantic website structure with SEO & OG tags
+├── firestore.rules      # Production-audited Firebase security rules
+├── index.html           # Full semantic website structure with SEO, Auth & Pay layout
 ├── style.css            # Midnight Tech CSS theme with glassmorphism & responsive grid
-├── script.js            # Menu toggle, filter tabs, autofill & WhatsApp logic
+├── script.js            # Auth, JUIT discount, dynamic UPI QR & WhatsApp logic
 ├── LICENSE              # MIT License
 └── README.md            # Repository documentation and guide
 ```

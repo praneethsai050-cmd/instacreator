@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for security and authentication
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Strict email domain verification for JUIT Solan students
+    function isJuitStudent() {
+      return isAuthenticated() && 
+             request.auth.token.email != null &&
+             request.auth.token.email.matches('.*@juitsolan[.]in$') &&
+             request.auth.token.email_verified == true;
+    }
+
+    // Field-level and size validators to prevent Resource Exhaustion / DoS
+    function isValidOrderData(data) {
+      return data.keys().hasAll(['clientName', 'clientEmail', 'websiteType', 'budgetRange', 'createdAt']) &&
+             data.keys().hasOnly(['clientName', 'clientEmail', 'clientPhone', 'websiteType', 'budgetRange', 'timeline', 'projectDetails', 'planName', 'amountInr', 'isJuitDiscountApplied', 'utrReference', 'paymentStatus', 'createdAt', 'userId']) &&
+             data.clientName is string && data.clientName.size() >= 2 && data.clientName.size() <= 100 &&
+             data.clientEmail is string && data.clientEmail.size() <= 120 &&
+             data.websiteType is string && data.websiteType.size() <= 80 &&
+             data.budgetRange is string && data.budgetRange.size() <= 50 &&
+             data.createdAt is timestamp;
+    }
+
+    // User profile documents (users/{userId})
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && 
+                       request.resource.data.keys().hasOnly(['uid', 'email', 'displayName', 'photoURL', 'isJuitStudent', 'createdAt']) &&
+                       request.resource.data.email == request.auth.token.email &&
+                       request.resource.data.isJuitStudent == (request.auth.token.email.matches('.*@juitsolan[.]in$'));
+      allow update: if isOwner(userId) &&
+                       // Prevent privilege escalation or modifying email / isJuitStudent flag after creation
+                       !request.resource.data.diff(resource.data).affectedKeys().hasAny(['email', 'isJuitStudent', 'uid', 'createdAt']);
+      allow delete: if false; // Profiles are preserved
+    }
+
+    // Project inquiries and payment records (orders/{orderId})
+    match /orders/{orderId} {
+      // Anyone can create an inquiry/order if valid data constraints are satisfied
+      allow create: if isValidOrderData(request.resource.data) &&
+                       (request.resource.data.isJuitDiscountApplied == false || isJuitStudent());
+      
+      // Only the verified owner or admin can read their submitted order
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || request.auth.token.email == 'domyosite@gmail.com');
+      
+      // Updates are restricted: clients can only submit their UTR reference; status changes are prevented
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid &&
+                       request.resource.data.diff(resource.data).affectedKeys().hasOnly(['utrReference']) &&
+                       request.resource.data.utrReference is string &&
+                       request.resource.data.utrReference.size() <= 50;
+      
+      allow delete: if false;
+    }
+
+    // Default deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

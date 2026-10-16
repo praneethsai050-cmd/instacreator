@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DoMyOSite | Custom Web Development by Praneeth Sai</title>
-  <meta name="description" content="DoMyOSite by Praneeth Sai: Custom, high-converting websites, student portfolios, e-commerce stores, and web apps built to your exact requirements at budget-friendly rates.">
+  <meta name="description" content="DoMyOSite by Praneeth Sai: Custom, high-converting websites, student portfolios, e-commerce stores, and web apps built to your exact requirements. Special discount for JUIT Solan students!">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -14,16 +14,16 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://praneethsai050-cmd.github.io/instacreator/">
   <meta property="og:title" content="DoMyOSite | Web Development Studio by Praneeth Sai">
-  <meta property="og:description" content="Get your dream website built. Portfolios, landing pages, and web apps built for students, creators, and businesses.">
+  <meta property="og:description" content="Get your dream website built. Portfolios, landing pages, and web apps built for students, creators, and businesses with UPI payment integration.">
   <meta property="og:image" content="favicon.svg">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DoMyOSite | Custom Web Development by Praneeth Sai">
-  <meta name="twitter:description" content="Budget-friendly custom websites, student portfolios, and web apps built to your exact specs.">
+  <meta name="twitter:description" content="Budget-friendly custom websites, student portfolios, and web apps. Special 25% JUIT Solan discount!">
   
   <!-- Keywords & Author -->
-  <meta name="keywords" content="DoMyOSite, Praneeth Sai, hire web developer, student portfolio, college website, freelance web developer, affordable website builder India">
+  <meta name="keywords" content="DoMyOSite, Praneeth Sai, JUIT Solan, juitsolan.in, hire web developer, student portfolio, college website, freelance web developer, affordable website builder India, UPI payment">
   <meta name="author" content="Praneeth Sai (DoMyOSite)">
 
   <!-- Google Fonts -->
@@ -33,6 +33,9 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+
+  <!-- Google Identity Services (GSI) for Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
@@ -40,6 +43,22 @@
   <div class="glow-orb orb-1"></div>
   <div class="glow-orb orb-2"></div>
   <div class="glow-orb orb-3"></div>
+
+  <!-- JUIT Solan Exclusive Campus Discount Top Bar -->
+  <aside class="juit-promo-banner" id="juitBanner">
+    <div class="container juit-banner-content">
+      <div class="juit-banner-text">
+        <span class="juit-tag">🎓 JUIT Waknaghat Special</span>
+        <span>Students & faculty with <strong>@juitsolan.in</strong> get <strong>Flat 25% OFF</strong> on all websites & portfolios!</span>
+      </div>
+      <div class="juit-banner-actions">
+        <button id="juitClaimBtn" class="btn btn-juit-claim btn-sm">
+          <i class="fa-brands fa-google"></i> Sign In to Claim 25% Off
+        </button>
+        <button id="closeJuitBanner" class="juit-close" aria-label="Dismiss banner">&times;</button>
+      </div>
+    </div>
+  </aside>
 
   <!-- Sticky Navbar -->
   <header class="navbar-wrapper">
@@ -58,6 +77,23 @@
         <a href="#portfolio" class="nav-link">Work & Repos</a>
         <a href="#process" class="nav-link">Process</a>
         <a href="#pricing" class="nav-link">Packages</a>
+        
+        <!-- Auth & Profile Container -->
+        <div class="nav-auth-container" id="navAuthContainer">
+          <button id="loginBtn" class="btn btn-secondary nav-login-btn">
+            <i class="fa-brands fa-google"></i> Sign In
+          </button>
+          <!-- User pill populated via JS when signed in -->
+          <div id="userProfilePill" class="user-profile-pill hidden">
+            <div class="user-avatar" id="navUserAvatar">U</div>
+            <div class="user-info-text">
+              <span class="user-name" id="navUserName">User</span>
+              <span class="juit-badge-pill hidden" id="navJuitBadge">🎓 25% JUITian</span>
+            </div>
+            <button id="signOutBtn" class="btn-signout" title="Sign Out"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+          </div>
+        </div>
+
         <a href="#contact" class="btn btn-outline nav-cta">Start Your Project</a>
       </div>
 
@@ -83,13 +119,13 @@
         </h1>
 
         <p class="hero-subtitle">
-          Welcome to <strong>DoMyOSite</strong>, an independent web studio founded by <strong>Praneeth Sai</strong>. We build high-converting landing pages, standout student portfolios, and custom web apps tailored to your exact requirements — on time, and at college-friendly rates.
+          Welcome to <strong>DoMyOSite</strong>, an independent web studio founded by <strong>Praneeth Sai</strong>. We build high-converting landing pages, standout student portfolios, and custom web apps tailored to your exact requirements — on time, and at college-friendly rates with instant UPI checkout.
         </p>
 
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">
-            <i class="fa-solid fa-rocket"></i> Get a Free Quote
-          </a>
+          <button type="button" class="btn btn-primary open-pay-trigger" data-plan="Student & College Starter" data-price="999">
+            <i class="fa-solid fa-bolt"></i> Book Online (₹999)
+          </button>
           <a href="#portfolio" class="btn btn-secondary">
             <i class="fa-solid fa-folder-open"></i> Explore Work
           </a>
@@ -99,9 +135,9 @@
         </div>
 
         <div class="hero-perks-row">
-          <div class="perk-pill"><i class="fa-solid fa-graduation-cap"></i> Student & College Friendly (From ₹999)</div>
-          <div class="perk-pill"><i class="fa-solid fa-bolt"></i> 24-48h Fast Delivery</div>
-          <div class="perk-pill"><i class="fa-solid fa-mobile-screen"></i> 100% Mobile Responsive</div>
+          <div class="perk-pill"><i class="fa-solid fa-graduation-cap"></i> Student Friendly (From ₹999)</div>
+          <div class="perk-pill highlight-perk"><i class="fa-solid fa-tag"></i> 25% Off with @juitsolan.in</div>
+          <div class="perk-pill"><i class="fa-solid fa-qrcode"></i> Instant UPI / QR Payment</div>
         </div>
       </div>
 
@@ -121,17 +157,16 @@
             <pre><code><span class="code-keyword">const</span> <span class="code-var">project</span> = {
   <span class="code-prop">brand</span>: <span class="code-str">"DoMyOSite"</span>,
   <span class="code-prop">leadDeveloper</span>: <span class="code-str">"Praneeth Sai"</span>,
-  <span class="code-prop">clientTypes</span>: [<span class="code-str">"Students"</span>, <span class="code-str">"Colleges"</span>, <span class="code-str">"Shops"</span>, <span class="code-str">"Startups"</span>],
-  <span class="code-prop">startingBudget</span>: <span class="code-num">"₹999 (INR)"</span>,
-  <span class="code-prop">customFeatures</span>: [
-    <span class="code-str">"Direct WhatsApp Integration"</span>,
-    <span class="code-str">"Free GitHub Hosting"</span>,
-    <span class="code-str">"100% Source Code Ownership"</span>
-  ]
+  <span class="code-prop">campusDiscount</span>: {
+    <span class="code-prop">domain</span>: <span class="code-str">"@juitsolan.in"</span>,
+    <span class="code-prop">discount</span>: <span class="code-str">"25% FLAT OFF"</span>
+  },
+  <span class="code-prop">paymentGateway</span>: [<span class="code-str">"GPay"</span>, <span class="code-str">"PhonePe"</span>, <span class="code-str">"Paytm UPI"</span>],
+  <span class="code-prop">startingBudget</span>: <span class="code-num">"₹999 (INR)"</span>
 };
 
 <span class="code-keyword">await</span> DoMyOSite.<span class="code-func">craftWebsite</span>(project);
-<span class="code-comment">// Status: Ready to build your site today!</span></code></pre>
+<span class="code-comment">// Status: Ready to build your website today!</span></code></pre>
           </div>
           <!-- Floating mini badges on the terminal -->
           <div class="floating-badge badge-1">
@@ -193,13 +228,18 @@
         <p class="service-desc">
           Stand out in campus placements, internships, and hackathons with a personal developer portfolio showcasing your projects, resume, and skills.
         </p>
-        <div class="bento-price-pill">Starting at just <strong>₹999</strong></div>
+        <div class="bento-price-pill">
+          Starting at <strong class="base-price-display">₹999</strong> 
+          <span class="juit-calc-badge hidden">(₹749 with JUIT ID)</span>
+        </div>
         <ul class="service-features">
           <li><i class="fa-solid fa-check"></i> Resume PDF download integration</li>
           <li><i class="fa-solid fa-check"></i> Interactive project cards with live links</li>
           <li><i class="fa-solid fa-check"></i> Free lifetime GitHub Pages hosting</li>
         </ul>
-        <a href="#contact" class="btn btn-outline btn-sm full-width">Claim Student Tier</a>
+        <button type="button" class="btn btn-outline btn-sm full-width open-pay-trigger" data-plan="Student & College Starter" data-price="999">
+          Book Student Tier
+        </button>
       </div>
 
       <!-- Bento 3: Square E-Commerce Card -->
@@ -207,7 +247,7 @@
         <div class="service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
         <h3 class="service-title">E-Commerce & Digital Stores</h3>
         <p class="service-desc">
-          Sell physical products, digital files, or coaching sessions with simple catalog browsing, WhatsApp order dispatch, or payment gateways.
+          Sell physical products, digital files, or coaching sessions with simple catalog browsing, WhatsApp order dispatch, or UPI payment gateways.
         </p>
         <ul class="service-features">
           <li><i class="fa-solid fa-check"></i> Product listings & search filters</li>
@@ -259,7 +299,7 @@
           <p class="dev-role">Founder & Lead Developer at <strong>DoMyOSite</strong></p>
           <div class="dev-badges">
             <span class="badge-item"><i class="fa-brands fa-github"></i> praneethsai050-cmd</span>
-            <span class="badge-item"><i class="fa-solid fa-location-dot"></i> India (Serving Worldwide)</span>
+            <span class="badge-item"><i class="fa-solid fa-location-dot"></i> Waknaghat / Solan, India</span>
           </div>
         </div>
         <div class="dev-stats-row">
@@ -299,18 +339,18 @@
           </div>
 
           <div class="adv-card">
-            <div class="adv-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="adv-icon"><i class="fa-solid fa-graduation-cap"></i></div>
             <div class="adv-text">
-              <h4>College & Startup Friendly Pricing</h4>
-              <p>Starting at ₹999 in Indian Rupees so students, clubs, and local stores can get high-grade websites affordably.</p>
+              <h4>JUIT Solan & College Community Discount</h4>
+              <p>Exclusive 25% discount for students with @juitsolan.in emails, plus pocket-friendly starter plans from ₹999.</p>
             </div>
           </div>
 
           <div class="adv-card">
-            <div class="adv-icon"><i class="fa-solid fa-key"></i></div>
+            <div class="adv-icon"><i class="fa-solid fa-qrcode"></i></div>
             <div class="adv-text">
-              <h4>100% Source Code Ownership</h4>
-              <p>You own all files, GitHub repositories, and hosting settings. No recurring lock-ins or hostage code.</p>
+              <h4>Seamless UPI Payment Integration</h4>
+              <p>Pay securely in Indian Rupees using Google Pay, PhonePe, Paytm, or direct UPI QR with instant WhatsApp receipt.</p>
             </div>
           </div>
         </div>
@@ -318,13 +358,13 @@
     </div>
   </section>
 
-  <!-- Portfolio & Repos Showcase (Asymmetric Case Studies) -->
+  <!-- Portfolio & Repos Showcase (With Interactive Visual Mockups) -->
   <section id="portfolio" class="portfolio-section container">
     <div class="section-header">
       <span class="section-tag">Proof of Capability</span>
       <h2 class="section-title">Real Code, Real Repositories</h2>
       <p class="section-description">
-        Explore projects authored by Praneeth Sai demonstrating clean architecture, security, and full-stack engineering.
+        Explore interactive mockups and open-source repositories authored by Praneeth Sai demonstrating clean architecture and responsive UI.
       </p>
     </div>
 
@@ -337,13 +377,23 @@
     </div>
 
     <div class="portfolio-grid" id="portfolioGrid">
-      <!-- Project 1: SecurePassGuard -->
+      <!-- Project 1: SecurePassGuard (Interactive Visual SVG) -->
       <div class="portfolio-card spotlight-card" data-category="security app">
-        <div class="card-media">
-          <div class="project-mockup mockup-security">
-            <i class="fa-solid fa-shield-cat"></i>
-            <span>SecurePassGuard</span>
-          </div>
+        <div class="card-media media-interactive">
+          <svg class="project-art-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="200" fill="#090e1a"/>
+            <!-- Cyber Grid Background -->
+            <path d="M0 50 H400 M0 100 H400 M0 150 H400 M50 0 V200 M100 0 V200 M150 0 V200 M200 0 V200 M250 0 V200 M300 0 V200 M350 0 V200" stroke="rgba(244,63,94,0.12)" stroke-width="1"/>
+            <!-- Glowing Vault Shield -->
+            <circle cx="200" cy="95" r="55" fill="rgba(244,63,94,0.1)" stroke="#f43f5e" stroke-width="2"/>
+            <circle cx="200" cy="95" r="42" fill="none" stroke="rgba(244,63,94,0.4)" stroke-width="1" stroke-dasharray="4 4"/>
+            <path d="M200 65 L225 78 V105 C225 120 200 132 200 132 C200 132 175 120 175 105 V78 Z" fill="rgba(244,63,94,0.25)" stroke="#f43f5e" stroke-width="2"/>
+            <circle cx="200" cy="95" r="6" fill="#fff"/>
+            <line x1="200" y1="101" x2="200" y2="110" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            <!-- Terminal UI text overlay -->
+            <rect x="20" y="150" width="360" height="32" rx="6" fill="rgba(15,23,42,0.8)" stroke="rgba(255,255,255,0.08)"/>
+            <text x="35" y="171" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8">&gt; AES-256 Vault: ENCRYPTED (Entropy: 98.4%)</text>
+          </svg>
           <span class="card-badge">Security Tool</span>
         </div>
         <div class="card-body">
@@ -367,13 +417,23 @@
         </div>
       </div>
 
-      <!-- Project 2: Camera Email Application -->
+      <!-- Project 2: Camera Email Application (Interactive Visual SVG) -->
       <div class="portfolio-card" data-category="app">
-        <div class="card-media">
-          <div class="project-mockup mockup-camera">
-            <i class="fa-solid fa-camera-retro"></i>
-            <span>Camera-Email-App</span>
-          </div>
+        <div class="card-media media-interactive">
+          <svg class="project-art-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="200" fill="#090e1a"/>
+            <!-- Camera Viewfinder -->
+            <rect x="40" y="25" width="320" height="150" rx="8" fill="rgba(15,23,42,0.6)" stroke="#eab308" stroke-width="1.5" stroke-dasharray="8 6"/>
+            <!-- Crosshairs -->
+            <line x1="200" y1="75" x2="200" y2="125" stroke="#eab308" stroke-width="2"/>
+            <line x1="175" y1="100" x2="225" y2="100" stroke="#eab308" stroke-width="2"/>
+            <circle cx="200" cy="100" r="18" fill="none" stroke="#eab308" stroke-width="1.5"/>
+            <!-- Target Detection Box -->
+            <rect x="130" y="55" width="140" height="90" fill="rgba(234,179,8,0.12)" stroke="#eab308" stroke-width="1"/>
+            <rect x="55" y="38" width="10" height="10" fill="#ef4444" rx="5"/>
+            <text x="75" y="47" font-family="'JetBrains Mono', monospace" font-size="11" fill="#ef4444" font-weight="700">REC • MOTION DETECTED</text>
+            <text x="240" y="160" font-family="'JetBrains Mono', monospace" font-size="10" fill="#94a3b8">SMTP: DISPATCHED</text>
+          </svg>
           <span class="card-badge">Automation App</span>
         </div>
         <div class="card-body">
@@ -397,13 +457,22 @@
         </div>
       </div>
 
-      <!-- Project 3: StudyBud Academic Engine -->
+      <!-- Project 3: StudyBud Academic Engine (Interactive Visual SVG) -->
       <div class="portfolio-card" data-category="app web">
-        <div class="card-media">
-          <div class="project-mockup mockup-study">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span>StudyBud & Docs Engine</span>
-          </div>
+        <div class="card-media media-interactive">
+          <svg class="project-art-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="200" fill="#090e1a"/>
+            <!-- Document Sheet -->
+            <rect x="90" y="20" width="220" height="160" rx="8" fill="#131c31" stroke="rgba(16,185,129,0.4)" stroke-width="1.5"/>
+            <!-- Academic Chart Waveform -->
+            <path d="M110 90 Q 145 40, 180 90 T 250 90 T 290 90" fill="none" stroke="#10b981" stroke-width="2.5"/>
+            <path d="M110 130 H290" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <rect x="110" y="40" width="90" height="8" rx="4" fill="#38bdf8"/>
+            <rect x="110" y="55" width="140" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+            <rect x="110" y="145" width="80" height="20" rx="4" fill="#10b981"/>
+            <text x="122" y="159" font-family="'JetBrains Mono', monospace" font-size="9" fill="#062312" font-weight="700">PDF READY</text>
+            <text x="210" y="159" font-family="'JetBrains Mono', monospace" font-size="10" fill="#94a3b8">LaTeX Engine</text>
+          </svg>
           <span class="card-badge">EdTech & Generator</span>
         </div>
         <div class="card-body">
@@ -429,11 +498,29 @@
 
       <!-- Project 4: Business Landing Page Template -->
       <div class="portfolio-card" data-category="web">
-        <div class="card-media">
-          <div class="project-mockup mockup-web">
-            <i class="fa-solid fa-laptop-code"></i>
-            <span>Modern SaaS / Business Site</span>
-          </div>
+        <div class="card-media media-interactive">
+          <svg class="project-art-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="200" fill="#090e1a"/>
+            <!-- Browser Mockup Window -->
+            <rect x="50" y="25" width="300" height="150" rx="8" fill="#0f172a" stroke="rgba(56,189,248,0.3)" stroke-width="1.5"/>
+            <rect x="50" y="25" width="300" height="25" fill="#1e293b"/>
+            <circle cx="65" cy="37" r="4" fill="#ef4444"/>
+            <circle cx="77" cy="37" r="4" fill="#f59e0b"/>
+            <circle cx="89" cy="37" r="4" fill="#10b981"/>
+            <rect x="110" y="32" width="180" height="11" rx="4" fill="rgba(255,255,255,0.1)"/>
+            <!-- Hero content inside mockup -->
+            <rect x="70" y="65" width="130" height="12" rx="4" fill="url(#heroGrad)"/>
+            <rect x="70" y="85" width="170" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+            <rect x="70" y="96" width="140" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+            <rect x="70" y="115" width="75" height="22" rx="4" fill="#6366f1"/>
+            <rect x="155" y="115" width="60" height="22" rx="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)"/>
+            <defs>
+              <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#6366f1"/>
+                <stop offset="100%" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+          </svg>
           <span class="card-badge">Client Template</span>
         </div>
         <div class="card-body">
@@ -447,23 +534,30 @@
             Production-grade landing page featuring modern glassmorphism styling, sticky navigation, interactive testimonial carousels, and an instant lead generation form.
           </p>
           <div class="card-footer">
-            <a href="#contact" class="link-btn">
-              <i class="fa-solid fa-eye"></i> Demo on Request
-            </a>
-            <a href="#contact" class="link-btn accent">
-              <i class="fa-solid fa-arrow-right"></i> Build for Me
-            </a>
+            <button type="button" class="link-btn preview-trigger" data-title="Business Landing Page Demo" data-url="demo-business">
+              <i class="fa-solid fa-eye"></i> Live Preview
+            </button>
+            <button type="button" class="link-btn accent open-pay-trigger" data-plan="Professional Portfolio & Business" data-price="2499">
+              <i class="fa-solid fa-arrow-right"></i> Book Now
+            </button>
           </div>
         </div>
       </div>
 
       <!-- Project 5: Creative Portfolio & Showcase Site -->
       <div class="portfolio-card" data-category="web">
-        <div class="card-media">
-          <div class="project-mockup mockup-portfolio">
-            <i class="fa-solid fa-palette"></i>
-            <span>Creator / Agency Portfolio</span>
-          </div>
+        <div class="card-media media-interactive">
+          <svg class="project-art-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="200" fill="#090e1a"/>
+            <!-- Portfolio Layout -->
+            <rect x="60" y="25" width="280" height="150" rx="8" fill="#111827" stroke="rgba(139,92,246,0.3)" stroke-width="1.5"/>
+            <circle cx="100" cy="65" r="22" fill="#8b5cf6"/>
+            <rect x="135" y="55" width="110" height="10" rx="3" fill="#fff"/>
+            <rect x="135" y="72" width="80" height="6" rx="2" fill="#94a3b8"/>
+            <rect x="75" y="105" width="70" height="50" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+            <rect x="160" y="105" width="70" height="50" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+            <rect x="245" y="105" width="70" height="50" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+          </svg>
           <span class="card-badge">Showcase Template</span>
         </div>
         <div class="card-body">
@@ -477,23 +571,34 @@
             Sleek personal branding website with customizable project galleries, interactive contact forms, client feedback badges, and social media connectivity.
           </p>
           <div class="card-footer">
-            <a href="#contact" class="link-btn">
-              <i class="fa-solid fa-eye"></i> Demo on Request
-            </a>
-            <a href="#contact" class="link-btn accent">
-              <i class="fa-solid fa-arrow-right"></i> Build for Me
-            </a>
+            <button type="button" class="link-btn preview-trigger" data-title="Portfolio Showcase Demo" data-url="demo-portfolio">
+              <i class="fa-solid fa-eye"></i> Live Preview
+            </button>
+            <button type="button" class="link-btn accent open-pay-trigger" data-plan="Student & College Starter" data-price="999">
+              <i class="fa-solid fa-arrow-right"></i> Book Now
+            </button>
           </div>
         </div>
       </div>
 
       <!-- Project 6: Quick E-Commerce Storefront -->
       <div class="portfolio-card" data-category="web app">
-        <div class="card-media">
-          <div class="project-mockup mockup-store">
-            <i class="fa-solid fa-bag-shopping"></i>
-            <span>Store & Checkout Flow</span>
-          </div>
+        <div class="card-media media-interactive">
+          <svg class="project-art-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="200" fill="#090e1a"/>
+            <!-- Storefront Cards -->
+            <rect x="60" y="30" width="125" height="140" rx="8" fill="#131c31" stroke="rgba(236,72,153,0.3)" stroke-width="1.5"/>
+            <rect x="75" y="45" width="95" height="55" rx="4" fill="rgba(236,72,153,0.15)"/>
+            <rect x="75" y="110" width="70" height="8" rx="2" fill="#fff"/>
+            <rect x="75" y="125" width="40" height="12" rx="3" fill="#10b981"/>
+            <text x="80" y="134" font-family="'JetBrains Mono', monospace" font-size="8" fill="#062312" font-weight="700">₹499</text>
+
+            <rect x="215" y="30" width="125" height="140" rx="8" fill="#131c31" stroke="rgba(236,72,153,0.3)" stroke-width="1.5"/>
+            <rect x="230" y="45" width="95" height="55" rx="4" fill="rgba(56,189,248,0.15)"/>
+            <rect x="230" y="110" width="70" height="8" rx="2" fill="#fff"/>
+            <rect x="230" y="125" width="40" height="12" rx="3" fill="#10b981"/>
+            <text x="235" y="134" font-family="'JetBrains Mono', monospace" font-size="8" fill="#062312" font-weight="700">₹899</text>
+          </svg>
           <span class="card-badge">E-Commerce</span>
         </div>
         <div class="card-body">
@@ -507,12 +612,12 @@
             Lightweight digital store allowing buyers to browse products, add items to cart, and complete orders directly via WhatsApp or UPI payments.
           </p>
           <div class="card-footer">
-            <a href="#contact" class="link-btn">
-              <i class="fa-solid fa-eye"></i> Demo on Request
-            </a>
-            <a href="#contact" class="link-btn accent">
-              <i class="fa-solid fa-arrow-right"></i> Build for Me
-            </a>
+            <button type="button" class="link-btn preview-trigger" data-title="Storefront Demo" data-url="demo-store">
+              <i class="fa-solid fa-eye"></i> Live Preview
+            </button>
+            <button type="button" class="link-btn accent open-pay-trigger" data-plan="Full-Stack App & Store" data-price="4999">
+              <i class="fa-solid fa-arrow-right"></i> Book Now
+            </button>
           </div>
         </div>
       </div>
@@ -546,7 +651,7 @@
         <div class="zigzag-card">
           <div class="zigzag-badge">Step 2</div>
           <h3 class="step-title">Clear Quote & Interactive Layout</h3>
-          <p class="step-desc">Praneeth reviews your specs and provides a transparent quote (in INR) with exact delivery dates and an initial interactive layout preview.</p>
+          <p class="step-desc">Praneeth reviews your specs and provides a transparent quote (in INR, with 25% JUIT discount if applicable) and an initial interactive layout preview.</p>
         </div>
       </div>
 
@@ -572,27 +677,30 @@
     </div>
   </section>
 
-  <!-- Pricing Section (Non-linear Hierarchy) -->
+  <!-- Pricing Section (With JUIT Discount Calculation & Online Booking) -->
   <section id="pricing" class="pricing-section container">
     <div class="section-header">
       <span class="section-tag">Transparent Indian Pricing (INR)</span>
       <h2 class="section-title">College & Business Friendly Packages</h2>
       <p class="section-description">
-        Affordable, transparent rates with zero hidden fees. Pick a tier below or ask for a custom quote:
+        Affordable, transparent rates with zero hidden fees. Sign in with <strong>@juitsolan.in</strong> to automatically apply <strong>25% Campus Discount</strong>!
       </p>
     </div>
 
     <div class="pricing-grid">
       <!-- Tier 1: Student Starter (Budget Favorite) -->
-      <div class="pricing-card student-pricing">
+      <div class="pricing-card student-pricing" id="planCard1">
         <div class="pricing-header">
           <div class="pricing-tag-mini">College Favorite</div>
           <h3 class="tier-name">Student & College Starter</h3>
           <p class="tier-desc">Budget-friendly for college students, personal portfolios, resume showcases, and club events.</p>
           <div class="tier-price">
             <span class="price-currency">₹</span>
-            <span class="price-value">999</span>
+            <span class="price-value" data-original="999">999</span>
             <span class="price-term">/ one-time</span>
+          </div>
+          <div class="juit-savings-pill hidden" id="savings1">
+            <i class="fa-solid fa-tag"></i> JUITian Price: <strong>₹749</strong> (Save ₹250)
           </div>
         </div>
         <ul class="tier-features">
@@ -602,11 +710,18 @@
           <li><i class="fa-solid fa-check"></i> WhatsApp & Contact Integration</li>
           <li><i class="fa-solid fa-check"></i> Fast 24-48 Hours Delivery</li>
         </ul>
-        <a href="#contact" class="btn btn-outline full-width select-package" data-package="Student & College Starter">Choose Student Starter</a>
+        <div class="pricing-cta-stack">
+          <button type="button" class="btn btn-primary full-width open-pay-trigger" data-plan="Student & College Starter" data-price="999">
+            <i class="fa-solid fa-qrcode"></i> Instant Pay / Book (₹999)
+          </button>
+          <a href="#contact" class="btn btn-outline full-width select-package" data-package="Student & College Starter">
+            Customize Requirements
+          </a>
+        </div>
       </div>
 
       <!-- Tier 2: Standard (Highlighted Centerpiece) -->
-      <div class="pricing-card highlighted">
+      <div class="pricing-card highlighted" id="planCard2">
         <div class="popular-ribbon">Recommended</div>
         <div class="pricing-header">
           <div class="pricing-tag-mini accent">Most Popular</div>
@@ -614,8 +729,11 @@
           <p class="tier-desc">Complete multi-section site for professionals, freelancers, agencies, and small businesses.</p>
           <div class="tier-price">
             <span class="price-currency">₹</span>
-            <span class="price-value">2,499</span>
+            <span class="price-value" data-original="2499">2,499</span>
             <span class="price-term">/ one-time</span>
+          </div>
+          <div class="juit-savings-pill hidden" id="savings2">
+            <i class="fa-solid fa-tag"></i> JUITian Price: <strong>₹1,874</strong> (Save ₹625)
           </div>
         </div>
         <ul class="tier-features">
@@ -626,19 +744,29 @@
           <li><i class="fa-solid fa-check"></i> Interactive Client Intake & WhatsApp Form</li>
           <li><i class="fa-solid fa-check"></i> 2 Rounds of Free Revisions</li>
         </ul>
-        <a href="#contact" class="btn btn-primary full-width select-package" data-package="Professional Portfolio & Business">Choose Professional</a>
+        <div class="pricing-cta-stack">
+          <button type="button" class="btn btn-primary full-width open-pay-trigger" data-plan="Professional Portfolio & Business" data-price="2499">
+            <i class="fa-solid fa-qrcode"></i> Instant Pay / Book (₹2,499)
+          </button>
+          <a href="#contact" class="btn btn-outline full-width select-package" data-package="Professional Portfolio & Business">
+            Customize Requirements
+          </a>
+        </div>
       </div>
 
       <!-- Tier 3: Custom / Full-Stack & Final Year -->
-      <div class="pricing-card">
+      <div class="pricing-card" id="planCard3">
         <div class="pricing-header">
           <div class="pricing-tag-mini">Full-Stack</div>
           <h3 class="tier-name">Full-Stack App & Store</h3>
           <p class="tier-desc">Advanced e-commerce storefronts, web applications, and college final year project builds.</p>
           <div class="tier-price">
             <span class="price-currency">₹</span>
-            <span class="price-value">4,999+</span>
-            <span class="price-term">/ custom quote</span>
+            <span class="price-value" data-original="4999">4,999</span>
+            <span class="price-term">/ starting from</span>
+          </div>
+          <div class="juit-savings-pill hidden" id="savings3">
+            <i class="fa-solid fa-tag"></i> JUITian Price: <strong>₹3,749</strong> (Save ₹1,250)
           </div>
         </div>
         <ul class="tier-features">
@@ -648,7 +776,14 @@
           <li><i class="fa-solid fa-check"></i> Automated Email & WhatsApp Notifications</li>
           <li><i class="fa-solid fa-check"></i> Full Source Code + Setup Assistance</li>
         </ul>
-        <a href="#contact" class="btn btn-outline full-width select-package" data-package="Full-Stack App & Store">Request Custom Quote</a>
+        <div class="pricing-cta-stack">
+          <button type="button" class="btn btn-primary full-width open-pay-trigger" data-plan="Full-Stack App & Store" data-price="4999">
+            <i class="fa-solid fa-qrcode"></i> Instant Pay / Book (₹4,999)
+          </button>
+          <a href="#contact" class="btn btn-outline full-width select-package" data-package="Full-Stack App & Store">
+            Customize Requirements
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -720,7 +855,7 @@
           <div class="form-row">
             <div class="form-group">
               <label for="clientEmail">Email Address <span class="required">*</span></label>
-              <input type="email" id="clientEmail" name="clientEmail" placeholder="rahul@gmail.com" required>
+              <input type="email" id="clientEmail" name="clientEmail" placeholder="e.g. yourname@juitsolan.in" required>
             </div>
             <div class="form-group">
               <label for="clientPhone">WhatsApp / Phone Number</label>
@@ -797,6 +932,194 @@
     </div>
   </section>
 
+  <!-- Interactive Payment & Checkout Modal -->
+  <div class="modal-overlay hidden" id="paymentModalOverlay">
+    <div class="modal-dialog payment-modal">
+      <button class="modal-close" id="closePaymentModal">&times;</button>
+      
+      <div class="modal-header">
+        <span class="section-tag-mini"><i class="fa-solid fa-lock"></i> Secure Payment Gateway</span>
+        <h3 class="modal-title">Book Website Build</h3>
+        <p class="modal-subtitle">Direct UPI & Netbanking checkout powered by Indian Payment Stack</p>
+      </div>
+
+      <!-- Plan Summary Card -->
+      <div class="pay-summary-card">
+        <div class="pay-summary-row">
+          <span class="pay-label">Selected Tier:</span>
+          <strong id="payPlanName" class="pay-val">Student & College Starter</strong>
+        </div>
+        <div class="pay-summary-row">
+          <span class="pay-label">Standard Price:</span>
+          <span id="payOriginalPrice" class="pay-val">₹999</span>
+        </div>
+        <div class="pay-summary-row discount-row hidden" id="payDiscountRow">
+          <span class="pay-label"><i class="fa-solid fa-graduation-cap"></i> JUIT Student Discount (25%):</span>
+          <span id="payDiscountAmount" class="pay-val text-green">- ₹250</span>
+        </div>
+        <div class="pay-divider"></div>
+        <div class="pay-summary-row total-row">
+          <span class="pay-label">Total Payable:</span>
+          <span id="payFinalTotal" class="pay-total-val">₹999</span>
+        </div>
+      </div>
+
+      <!-- Payment Tabs -->
+      <div class="pay-tabs">
+        <button class="pay-tab active" data-tab="qr">Instant QR Code</button>
+        <button class="pay-tab" data-tab="apps">UPI Apps</button>
+        <button class="pay-tab" data-tab="details">UPI ID / Bank</button>
+      </div>
+
+      <!-- Tab Content: Dynamic QR Code -->
+      <div class="pay-tab-content" id="tabContentQr">
+        <div class="qr-container">
+          <div class="qr-box">
+            <img id="dynamicUpiQr" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi%3A%2F%2Fpay%3Fpa%3D8777679256%40okaxis%26pn%3DPraneeth%2520Sai%2520(DoMyOSite)%26am%3D999%26cu%3DINR" alt="Scan to pay with UPI" width="200" height="200">
+            <div class="qr-scan-badge"><i class="fa-solid fa-camera"></i> Scan with any UPI App</div>
+          </div>
+          <div class="qr-instructions">
+            <p><strong>Scan & Pay with Any App:</strong></p>
+            <div class="app-icons-row">
+              <span class="app-chip"><i class="fa-brands fa-google-pay"></i> GPay</span>
+              <span class="app-chip"><i class="fa-solid fa-mobile-screen"></i> PhonePe</span>
+              <span class="app-chip"><i class="fa-solid fa-wallet"></i> Paytm</span>
+              <span class="app-chip"><i class="fa-solid fa-building-columns"></i> BHIM</span>
+            </div>
+            <p class="qr-note">UPI ID: <strong id="displayedUpiId">8777679256@okaxis</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Quick UPI App Deep Links -->
+      <div class="pay-tab-content hidden" id="tabContentApps">
+        <div class="upi-apps-grid">
+          <a href="#" id="gpayDeepLink" class="upi-app-btn gpay-btn">
+            <i class="fa-brands fa-google-pay"></i> Pay via Google Pay
+          </a>
+          <a href="#" id="phonepeDeepLink" class="upi-app-btn phonepe-btn">
+            <i class="fa-solid fa-bolt"></i> Pay via PhonePe
+          </a>
+          <a href="#" id="paytmDeepLink" class="upi-app-btn paytm-btn">
+            <i class="fa-solid fa-wallet"></i> Pay via Paytm
+          </a>
+        </div>
+        <p class="mobile-only-note"><i class="fa-solid fa-info-circle"></i> Direct app links open instantly on Android & iOS devices.</p>
+      </div>
+
+      <!-- Tab Content: Manual UPI Details -->
+      <div class="pay-tab-content hidden" id="tabContentDetails">
+        <div class="manual-details-box">
+          <div class="detail-row">
+            <span>Primary UPI ID:</span>
+            <div class="copy-field">
+              <code>8777679256@okaxis</code>
+              <button class="btn-copy" id="copyUpiBtn" title="Copy UPI ID"><i class="fa-solid fa-copy"></i></button>
+            </div>
+          </div>
+          <div class="detail-row">
+            <span>Payee Name:</span>
+            <strong>Praneeth Sai (DoMyOSite)</strong>
+          </div>
+          <div class="detail-row">
+            <span>Phone / WhatsApp:</span>
+            <strong>+91 87776 79256</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post-Payment Confirmation Box -->
+      <div class="payment-verify-form">
+        <label for="utrRefInput">Enter 12-Digit UTR / Transaction Reference:</label>
+        <div class="utr-input-group">
+          <input type="text" id="utrRefInput" placeholder="e.g. 4289XXXXXXXX" maxlength="25">
+          <button type="button" class="btn btn-whatsapp" id="confirmPaymentBtn">
+            <i class="fa-brands fa-whatsapp"></i> Notify on WhatsApp
+          </button>
+        </div>
+        <p class="verify-note"><i class="fa-solid fa-shield-check"></i> Praneeth will confirm your slot and initiate the build immediately upon receipt.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Authentication Modal -->
+  <div class="modal-overlay hidden" id="authModalOverlay">
+    <div class="modal-dialog auth-modal">
+      <button class="modal-close" id="closeAuthModal">&times;</button>
+      <div class="modal-header">
+        <div class="auth-icon-badge"><i class="fa-brands fa-google"></i></div>
+        <h3 class="modal-title">Sign In with Google</h3>
+        <p class="modal-subtitle">Sign in to unlock exclusive campus discounts, track orders, and save your project specs.</p>
+      </div>
+
+      <!-- JUIT Solan Highlight Box -->
+      <div class="juit-promo-card">
+        <div class="juit-card-header">
+          <span class="juit-badge-pill">🎓 Jaypee University (JUIT)</span>
+          <span class="discount-pill">25% OFF</span>
+        </div>
+        <p>Are you a student or faculty at JUIT Solan? Sign in with your <strong>@juitsolan.in</strong> email to get an automatic <strong>25% discount</strong> on all website packages!</p>
+      </div>
+
+      <!-- Quick JUIT Instant Demo Button -->
+      <div class="auth-actions">
+        <button type="button" class="btn btn-juit-demo full-width" id="demoJuitLoginBtn">
+          <i class="fa-solid fa-graduation-cap"></i> Quick Sign-In with JUIT Solan ID (@juitsolan.in)
+        </button>
+        
+        <div class="auth-divider"><span>OR REGULAR SIGN IN</span></div>
+
+        <div class="form-group">
+          <label for="authEmailInput">Enter Your Email Address:</label>
+          <input type="email" id="authEmailInput" placeholder="yourname@gmail.com or @juitsolan.in">
+        </div>
+        <button type="button" class="btn btn-primary full-width" id="submitEmailAuthBtn">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Continue with Email
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Live Demo Preview Modal -->
+  <div class="modal-overlay hidden" id="previewModalOverlay">
+    <div class="modal-dialog preview-modal">
+      <div class="preview-modal-header">
+        <div class="preview-title-box">
+          <span class="preview-dot dot-red"></span>
+          <span class="preview-dot dot-yellow"></span>
+          <span class="preview-dot dot-green"></span>
+          <span class="preview-title" id="previewModalTitle">Template Live Demo</span>
+        </div>
+        <div class="preview-controls">
+          <button class="device-btn active" data-device="desktop"><i class="fa-solid fa-desktop"></i></button>
+          <button class="device-btn" data-device="mobile"><i class="fa-solid fa-mobile-screen"></i></button>
+          <button class="modal-close" id="closePreviewModal">&times;</button>
+        </div>
+      </div>
+      <div class="preview-body">
+        <div class="preview-iframe-wrapper" id="previewWrapper">
+          <div class="preview-screen-content" id="previewScreenContent">
+            <!-- Simulated Interactive Template View -->
+            <div class="simulated-site">
+              <header class="sim-nav">
+                <span class="sim-logo">&lt;DemoSite/&gt;</span>
+                <span class="sim-links">Home • Features • Pricing • Contact</span>
+              </header>
+              <div class="sim-hero">
+                <h2>Designed for Maximum Conversions</h2>
+                <p>Lightning fast, responsive on all devices, and connected to WhatsApp.</p>
+                <div class="sim-btns">
+                  <span class="sim-btn-primary">Explore Demo</span>
+                  <span class="sim-btn-sec">Get in Touch</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container footer-content">
@@ -809,7 +1132,7 @@
           </div>
         </a>
         <p class="footer-tagline">
-          Crafting custom, high-converting websites and software solutions for students, creators, and businesses worldwide.
+          Crafting custom, high-converting websites and software solutions for students, creators, and businesses worldwide. Special campus discounts for JUIT Solan.
         </p>
       </div>
 
@@ -841,13 +1164,13 @@
             <i class="fa-solid fa-envelope"></i>
           </a>
         </div>
-        <p class="footer-location"><i class="fa-solid fa-location-dot"></i> Available Worldwide (Remote)</p>
+        <p class="footer-location"><i class="fa-solid fa-location-dot"></i> Waknaghat / Solan, HP, India</p>
       </div>
     </div>
 
     <div class="footer-bottom container">
       <p>&copy; <span id="currentYear">2026</span> <strong>DoMyOSite</strong>. Engineered by <strong>Praneeth Sai</strong>. All rights reserved.</p>
-      <p class="built-with">High-Performance & Modern Web Architecture.</p>
+      <p class="built-with">High-Performance & Modern Web Architecture • Audited Security</p>
     </div>
   </footer>
 
