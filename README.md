@@ -1,4 +1,4 @@
-# 🚀 Praneeth Sai — Web Developer & Client Solutions Studio
+# 🚀 DoMyOSite — Web Development Studio by Praneeth Sai
 
 <div align="center">
 
@@ -8,7 +8,7 @@
 [![Email](https://img.shields.io/badge/Email-domyosite%40gmail.com-EA4335?logo=gmail&logoColor=white)](mailto:domyosite@gmail.com)
 [![Instagram](https://img.shields.io/badge/Instagram-%40fast__and__th__curious-E4405F?logo=instagram&logoColor=white)](https://instagram.com/fast_and_th_curious)
 
-**A high-converting client acquisition website built with a modern Midnight Tech Dark aesthetic to showcase services, repositories, and convert visitors into paying clients.**
+**DoMyOSite: Custom web development studio founded and engineered by Praneeth Sai. Built with an asymmetric, non-linear Bento Grid design to showcase work, services, and student/business packages in INR (₹).**
 
 [🌐 Live Demo](https://praneethsai050-cmd.github.io/instacreator/) • [💬 WhatsApp](https://wa.me/918777679256) • [✉️ Email Inquiries](mailto:domyosite@gmail.com)
 
@@ -18,8 +18,13 @@
 
 ## 🌟 Key Features
 
-- **Personal Brand & Agency Identity**: Clean, authoritative developer branding for **Praneeth Sai** with an active "Available for new projects" status indicator.
-- **Full-Suite Web Development Services**:
+- **Brand & Developer Identity**: **DoMyOSite** engineered by **Praneeth Sai**, connecting clients directly with the developer with zero middlemen.
+- **Asymmetric, Non-Linear Architecture**:
+  - 🖥️ **Interactive Code Terminal Hero**: Live JavaScript configuration card with floating tech badges.
+  - 🍱 **Bento Grid Services Layout**: Multi-size feature cards, miniature browser previews, and student tags.
+  - 👤 **Founder Spotlight Section**: Direct-to-developer credentials, GitHub verified status, and stats.
+  - ⚡ **Zig-Zag Process Timeline**: Alternating glowing nodes and roadmap cards.
+  - 🇮🇳 **Budget-Friendly Indian Pricing (INR)**: College starter tier from **₹999**, standard portfolio **₹2,499**, and custom apps **₹4,999+**.
   - 🚀 High-converting Business Landing Pages
   - 💼 Professional Portfolios & Resumes
   - 🛒 E-Commerce & Instant Storefronts
