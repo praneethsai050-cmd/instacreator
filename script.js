@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Configuration Constants ---
   const PRANEETH_WHATSAPP_NUMBER = '918777679256';
   const PRANEETH_EMAIL = 'domyosite@gmail.com';
-  const PRIMARY_UPI_ID = '8777679256@okaxis';
+  const PRIMARY_UPI_ID = '8777679256@ybl';
   const JUIT_DISCOUNT_PERCENT = 25; // 25% Flat Discount for JUIT Waknaghat students
 
   // --- State Management ---

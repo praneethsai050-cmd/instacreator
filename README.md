@@ -35,7 +35,7 @@
 - **Interactive UPI Pay Layout & Checkout**:
   - 💳 **Dynamic UPI QR Code**: Real-time generation of custom UPI payment QR codes with exact amount and recipient note.
   - 📲 **Instant App Checkout**: Direct intent deep links for Google Pay, PhonePe, Paytm, and BHIM.
-  - 📋 **1-Click Copy UPI ID**: Copies `8777679256@okaxis` with visual feedback.
+  - 📋 **1-Click Copy UPI ID**: Copies `8777679256@ybl` with visual feedback.
   - 📝 **UTR Verification**: Allows users to enter their transaction reference and sends instant WhatsApp confirmation to Praneeth.
 - **Audited Cloud Security (`firestore.rules`)**:
   - Audited against the **Firebase Security Rules Auditor** checklist (identity-level security, resource exhaustion prevention, string length checks, and JUIT domain verification).
