@@ -1,82 +1,92 @@
-# 🚀 Praneeth Sai — Web Developer & Client Solutions Site
+# 🚀 Praneeth Sai — Web Developer & Client Solutions Studio
 
-A modern, high-converting freelance developer & website creation business site built with a **Midnight Tech Dark Theme**, showcasing your work, services, and an interactive **Project Requirement Intake Form** connected to **WhatsApp** and **Email**.
+<div align="center">
 
----
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Ready-brightgreen?logo=github)](https://praneethsai050-cmd.github.io/instacreator/)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Chat%20Now-25D366?logo=whatsapp&logoColor=white)](https://wa.me/918777679256)
+[![Email](https://img.shields.io/badge/Email-domyosite%40gmail.com-EA4335?logo=gmail&logoColor=white)](mailto:domyosite@gmail.com)
+[![Instagram](https://img.shields.io/badge/Instagram-%40fast__and__th__curious-E4405F?logo=instagram&logoColor=white)](https://instagram.com/fast_and_th_curious)
 
-## 🌟 Features Included
+**A high-converting client acquisition website built with a modern Midnight Tech Dark aesthetic to showcase services, repositories, and convert visitors into paying clients.**
 
-1. **Brand Identity & Hero Section**:
-   - Clean developer branding (`Praneeth Sai`).
-   - "Available for new projects" live status indicator.
-   - Quick conversion buttons ("Get a Free Quote", "Explore Work", "Chat on WhatsApp").
-   - Value metrics (Mobile-First, SEO-Ready, 3-7 Days Delivery).
+[🌐 Live Demo](https://praneethsai050-cmd.github.io/instacreator/) • [💬 WhatsApp](https://wa.me/918777679256) • [✉️ Email Inquiries](mailto:domyosite@gmail.com)
 
-2. **Full-Suite Services Section**:
-   - Business & Landing Pages.
-   - Personal & Professional Portfolios.
-   - E-Commerce & Digital Stores.
-   - Custom Web Applications & Backend Logic.
-   - Website Redesign & Modernization.
-   - Free Deployment & Launch Assistance.
-
-3. **Projects & Repos Showcase**:
-   - Filterable cards by category (`Websites & Templates`, `Full-Stack & Systems`, `Security & Tools`).
-   - Highlights your real repositories: **`SecurePassGuard`**, **`camera-email-app`**, and **`studybud`**.
-   - Direct link to your GitHub profile (`https://github.com/praneethsai050-cmd`).
-
-4. **Transparent 4-Step Process & Pricing Packages**:
-   - Clear roadmap: Submit Specs ➔ Quote & Prototype ➔ Build & Refine ➔ Deploy & Launch.
-   - 3 transparent service tiers (Starter, Professional, Custom).
-   - "Choose" buttons that auto-fill the contact form with the chosen package.
-
-5. **Client Requirement Intake Form**:
-   - Form fields: Name, Email, Phone/WhatsApp, Website Type, Budget Range, Desired Timeline, and Detailed Requirements.
-   - Automatically formats submitted requirements into a clean structured message.
-   - Direct 1-click transmission to **Email** or **WhatsApp**.
-   - Floating WhatsApp quick-action button with hover tooltip.
+</div>
 
 ---
 
-## 📁 File Structure
+## 🌟 Key Features
+
+- **Personal Brand & Agency Identity**: Clean, authoritative developer branding for **Praneeth Sai** with an active "Available for new projects" status indicator.
+- **Full-Suite Web Development Services**:
+  - 🚀 High-converting Business Landing Pages
+  - 💼 Professional Portfolios & Resumes
+  - 🛒 E-Commerce & Instant Storefronts
+  - ⚙️ Custom Web Apps & Automations
+  - 🔄 Website Redesigns & Performance Optimization
+- **Interactive Project & Repository Showcase**:
+  - **`SecurePassGuard`** (Security & Cryptography Password Tool)
+  - **`camera-email-app`** (Automated Motion Detection & Camera Notification Engine)
+  - **`studybud`** (Academic Notes & Automated Diagram / PDF Synthesis Engine)
+  - Live client-ready demo templates for businesses, portfolios, and stores.
+- **Interactive Client Intake Form**:
+  - Allows clients to choose their website type, budget tier, timeline, and description.
+  - Automatically structures the requirement specifications into a formatted brief.
+  - 1-click submission directly via **Email** or **WhatsApp**.
+- **Social & Instant Connect**:
+  - Persistent floating WhatsApp button with live tooltip.
+  - Connected to GitHub ([`praneethsai050-cmd`](https://github.com/praneethsai050-cmd)), Instagram ([`@fast_and_th_curious`](https://instagram.com/fast_and_th_curious)), WhatsApp, and Email.
+- **Automated CI/CD**: Pre-configured GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically deploys changes to GitHub Pages on every push.
+
+---
+
+## 📁 Repository Structure
 
 ```text
 instacreator/
-├── index.html       # Primary website layout and content
-├── style.css        # Modern Midnight Tech CSS theme with glassmorphism & gradients
-├── script.js        # Responsive menu, project filtering, autofill & WhatsApp logic
-└── README.md        # Setup and deployment documentation
+├── .github/
+│   └── workflows/
+│       └── deploy.yml   # Automatic GitHub Pages CI/CD deployment
+├── .gitignore           # Clean exclusion of temporary/OS files
+├── favicon.svg          # Glowing code brackets vector favicon
+├── index.html           # Full semantic website structure with SEO & OG tags
+├── style.css            # Midnight Tech CSS theme with glassmorphism & responsive grid
+├── script.js            # Menu toggle, filter tabs, autofill & WhatsApp logic
+├── LICENSE              # MIT License
+└── README.md            # Repository documentation and guide
 ```
 
 ---
 
 ## ⚙️ Active Contact Configuration
 
-Your contact credentials are now linked across the entire site:
-- **WhatsApp**: `+91 87776 79256` (API format: `918777679256`)
+- **WhatsApp**: `+91 87776 79256` (API: `918777679256`)
 - **Email**: `domyosite@gmail.com`
 - **GitHub**: `https://github.com/praneethsai050-cmd`
-
-Whenever a visitor submits the intake form or taps any WhatsApp/Email button, inquiries will go straight to your phone and inbox!
+- **Instagram**: `https://instagram.com/fast_and_th_curious`
 
 ---
 
-## 🌐 How to Deploy to GitHub Pages (Free)
+## 🚀 How to Publish Live on GitHub
 
-1. Initialize a git repository in this folder:
+To push your repository and make it live on **`https://praneethsai050-cmd.github.io/instacreator/`**:
+
+1. Open your browser and go to: **[github.com/new](https://github.com/new)**
+2. Set the **Repository name** to: **`instacreator`**
+3. Choose **Public** and **DO NOT** check "Add a README file" (we already have a complete one).
+4. Click **Create repository**.
+5. Push the commits from this directory:
    ```powershell
-   git init
-   git add .
-   git commit -m "Launch Praneeth Sai web development services site"
-   ```
-2. Create a new repository on your GitHub account (`praneethsai050-cmd`) named:
-   - `praneethsai050-cmd.github.io` (for a root portfolio URL), or
-   - `instacreator` / `web-services` (e.g. `praneethsai050-cmd.github.io/instacreator`)
-3. Link and push your code:
-   ```powershell
-   git remote add origin https://github.com/praneethsai050-cmd/<REPO-NAME>.git
-   git branch -M main
    git push -u origin main
    ```
-4. On GitHub, go to **Settings > Pages > Source** and select the `main` branch root (`/`).
-5. Your website is instantly live!
+6. In your new repository on GitHub:
+   - Go to **Settings** ➔ **Pages**.
+   - Under **Build and deployment > Source**, select **GitHub Actions**.
+   - Your site will automatically build and publish live!
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE) — Copyright (c) 2026 Praneeth Sai.
