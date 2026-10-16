@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DoMyOSite | Custom Web Development by Praneeth Sai</title>
-  <meta name="description" content="DoMyOSite by Praneeth Sai: Custom, high-converting websites, student portfolios, e-commerce stores, and web apps built to your exact requirements. Special discount for JUIT Solan students!">
+  <meta name="description" content="DoMyOSite by Praneeth Sai: Custom, high-converting websites, student portfolios, e-commerce stores, and web apps built to your exact requirements.">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -20,10 +20,10 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DoMyOSite | Custom Web Development by Praneeth Sai">
-  <meta name="twitter:description" content="Budget-friendly custom websites, student portfolios, and web apps. Special 25% JUIT Solan discount!">
+  <meta name="twitter:description" content="Budget-friendly custom websites, personal portfolios, and custom web applications.">
   
   <!-- Keywords & Author -->
-  <meta name="keywords" content="DoMyOSite, Praneeth Sai, JUIT Solan, juitsolan.in, hire web developer, student portfolio, college website, freelance web developer, affordable website builder India, UPI payment">
+  <meta name="keywords" content="DoMyOSite, Praneeth Sai, hire web developer, student portfolio, college website, freelance web developer, affordable website builder India, UPI payment">
   <meta name="author" content="Praneeth Sai (DoMyOSite)">
 
   <!-- Google Fonts: Space Grotesk, Plus Jakarta Sans, JetBrains Mono, Inter -->
@@ -45,22 +45,6 @@
   <div class="glow-orb orb-2"></div>
   <div class="glow-orb orb-3"></div>
 
-  <!-- JUIT Solan Exclusive Campus Discount Top Bar -->
-  <aside class="juit-promo-banner" id="juitBanner">
-    <div class="container juit-banner-content">
-      <div class="juit-banner-text">
-        <span class="juit-tag">🎓 JUIT Waknaghat Special</span>
-        <span>Students &amp; faculty with <strong>@juitsolan.in</strong> get <strong>Flat 25% OFF</strong> on all websites &amp; portfolios!</span>
-      </div>
-      <div class="juit-banner-actions">
-        <a href="#pricing" class="btn btn-juit-claim btn-sm">
-          <i class="fa-solid fa-graduation-cap"></i> View 25% Off Rates
-        </a>
-        <button id="closeJuitBanner" class="juit-close" aria-label="Dismiss banner">&times;</button>
-      </div>
-    </div>
-  </aside>
-
   <!-- Sticky Navbar -->
   <header class="navbar-wrapper">
     <nav class="navbar container">
@@ -74,7 +58,6 @@
 
       <div class="nav-links" id="navLinks">
         <a href="#services" class="nav-link">Services</a>
-        <a href="#three-d-experience" class="nav-link"><i class="fa-solid fa-cube"></i> 3D Web</a>
         <a href="#ai-estimator" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Estimator</a>
         <a href="#about-dev" class="nav-link">About Developer</a>
         <a href="#portfolio" class="nav-link">Work & Repos</a>
@@ -125,7 +108,7 @@
 
         <div class="hero-perks-row">
           <div class="perk-pill"><i class="fa-solid fa-graduation-cap"></i> Student Friendly (From ₹999)</div>
-          <div class="perk-pill highlight-perk"><i class="fa-solid fa-tag"></i> 25% Off with @juitsolan.in</div>
+          <div class="perk-pill highlight-perk"><i class="fa-solid fa-bolt"></i> Fast 24-48h Delivery</div>
           <div class="perk-pill"><i class="fa-solid fa-qrcode"></i> Instant UPI / QR Payment</div>
         </div>
       </div>
@@ -146,10 +129,7 @@
             <pre><code><span class="code-keyword">const</span> <span class="code-var">project</span> = {
   <span class="code-prop">brand</span>: <span class="code-str">"DoMyOSite"</span>,
   <span class="code-prop">leadDeveloper</span>: <span class="code-str">"Praneeth Sai"</span>,
-  <span class="code-prop">campusDiscount</span>: {
-    <span class="code-prop">domain</span>: <span class="code-str">"@juitsolan.in"</span>,
-    <span class="code-prop">discount</span>: <span class="code-str">"25% FLAT OFF"</span>
-  },
+  <span class="code-prop">pricingModel</span>: <span class="code-str">"Transparent & Budget-Friendly"</span>,
   <span class="code-prop">paymentGateway</span>: [<span class="code-str">"GPay"</span>, <span class="code-str">"PhonePe"</span>, <span class="code-str">"Paytm UPI"</span>],
   <span class="code-prop">startingBudget</span>: <span class="code-num">"₹999 (INR)"</span>
 };
@@ -218,8 +198,7 @@
           Stand out in campus placements, internships, and hackathons with a personal developer portfolio showcasing your projects, resume, and skills.
         </p>
         <div class="bento-price-pill">
-          Starting at <strong class="base-price-display">₹999</strong> 
-          <span class="juit-calc-badge hidden">(₹749 with JUIT ID)</span>
+          Starting at <strong class="base-price-display">₹999</strong>
         </div>
         <ul class="service-features">
           <li><i class="fa-solid fa-check"></i> Resume PDF download integration</li>
@@ -274,73 +253,6 @@
     </div>
   </section>
 
-  <!-- Interactive 3D Web Experience Studio Section -->
-  <section id="three-d-experience" class="three-d-section container">
-    <div class="section-header">
-      <span class="section-tag"><i class="fa-solid fa-cube"></i> Three.js &amp; WebGL Engine</span>
-      <h2 class="section-title">Bring the 3rd Dimension to Your Website</h2>
-      <p class="section-description">
-        Static flat websites get lost in the noise. DoMyOSite crafts custom <strong>Three.js</strong>, <strong>React Three Fiber</strong>, and <strong>WebGL</strong> interactive scenes optimized for desktop and mobile with smooth 60 FPS performance.
-      </p>
-    </div>
-
-    <div class="three-d-showcase-grid">
-      <!-- 3D Interactive Viewport -->
-      <div class="three-d-viewport-box">
-        <canvas id="showcase3dCanvas" class="showcase-canvas" aria-label="Interactive 3D Viewport"></canvas>
-        <div class="viewport-hud">
-          <div class="hud-pill"><span class="hud-dot"></span> WebGL 2.0 • 60 FPS</div>
-          <div class="hud-instruction"><i class="fa-solid fa-hand-pointer"></i> Drag to rotate • Scroll to zoom</div>
-        </div>
-      </div>
-
-      <!-- 3D Control Center & Spec Panel -->
-      <div class="three-d-control-box">
-        <div class="control-header">
-          <h3 class="control-title"><i class="fa-solid fa-sliders"></i> Real-time 3D Configurator</h3>
-          <span class="engine-badge">Three.js r128</span>
-        </div>
-        <p class="control-desc">
-          Test interactive 3D rendering live in your browser. We bring this same level of interactivity to your products, landing pages, and college projects.
-        </p>
-
-        <div class="control-item">
-          <label class="control-lbl">Select 3D Mesh Geometry:</label>
-          <div class="geom-btn-row">
-            <button type="button" class="geom-btn active" data-geom="torus">Torus Knot</button>
-            <button type="button" class="geom-btn" data-geom="icosahedron">Tech Icosahedron</button>
-            <button type="button" class="geom-btn" data-geom="sphere">Cyber Sphere</button>
-          </div>
-        </div>
-
-        <div class="control-item">
-          <label class="control-lbl">Rendering Style:</label>
-          <div class="style-btn-row">
-            <button type="button" class="style-btn active" data-style="wireframe">Glow Wireframe</button>
-            <button type="button" class="style-btn" data-style="solid">Metallic Iridescent</button>
-          </div>
-        </div>
-
-        <div class="control-item">
-          <label class="control-lbl">Rotation Speed: <span id="speedValueDisplay">1.0x</span></label>
-          <input type="range" id="threeDSpeedSlider" min="0" max="3" step="0.2" value="1" class="speed-slider">
-        </div>
-
-        <div class="three-d-features-list">
-          <div class="feature-chip"><i class="fa-solid fa-bolt"></i> Draco / WebP Compressed</div>
-          <div class="feature-chip"><i class="fa-solid fa-mobile-screen"></i> Mobile Clamped DPR (1.0)</div>
-          <div class="feature-chip"><i class="fa-solid fa-shield-halved"></i> WebGL Fallback Safe</div>
-        </div>
-
-        <div class="control-cta-row">
-          <a href="#contact" class="btn btn-primary full-width select-package" data-package="Custom Web Application">
-            <i class="fa-solid fa-cubes"></i> Request a 3D Website from Praneeth
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Gemini API Dev: Instant AI Website Scope & Cost Estimator -->
   <section id="ai-estimator" class="ai-estimator-section container">
     <div class="ai-estimator-card">
@@ -363,9 +275,9 @@
         </div>
         <div class="quick-prompts">
           <span>Try popular prompts:</span>
-          <button type="button" class="prompt-chip" data-prompt="Student developer portfolio with GitHub repositories, resume download, and 25% JUIT discount">Student Developer Portfolio</button>
+          <button type="button" class="prompt-chip" data-prompt="Student developer portfolio with GitHub repositories, project showcases, and resume download">Student Developer Portfolio</button>
           <button type="button" class="prompt-chip" data-prompt="E-commerce store for apparel with instant UPI QR payments and WhatsApp checkout">E-Commerce Storefront</button>
-          <button type="button" class="prompt-chip" data-prompt="Interactive 3D agency landing page with Three.js WebGL animations and lead capture">3D Interactive Landing Page</button>
+          <button type="button" class="prompt-chip" data-prompt="High-impact modern agency landing page with custom animations and lead capture">Modern Agency Landing Page</button>
         </div>
       </div>
 
@@ -381,7 +293,7 @@
           <div class="result-specs-grid">
             <div class="spec-box">
               <span class="spec-lbl">Recommended Stack</span>
-              <strong id="aiTechStack" class="spec-val">HTML5, Three.js, CSS3, UPI QR</strong>
+              <strong id="aiTechStack" class="spec-val">HTML5, JavaScript, CSS3, UPI QR</strong>
             </div>
             <div class="spec-box">
               <span class="spec-lbl">Estimated Delivery</span>
@@ -393,7 +305,7 @@
             </div>
             <div class="spec-box highlight">
               <span class="spec-lbl">Estimated Price</span>
-              <strong id="aiPrice" class="spec-val">₹999 (₹749 for JUIT)</strong>
+              <strong id="aiPrice" class="spec-val">₹999</strong>
             </div>
           </div>
           <div class="result-actions">
@@ -465,10 +377,10 @@
           </div>
 
           <div class="adv-card">
-            <div class="adv-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="adv-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="adv-text">
-              <h4>JUIT Solan & College Community Discount</h4>
-              <p>Exclusive 25% discount for students with @juitsolan.in emails, plus pocket-friendly starter plans from ₹999.</p>
+              <h4>Transparent, Pocket-Friendly Rates</h4>
+              <p>Budget-friendly web packages engineered specifically for students, indie creators, and startups starting from ₹999.</p>
             </div>
           </div>
 
@@ -700,7 +612,7 @@
         <div class="zigzag-card">
           <div class="zigzag-badge">Step 2</div>
           <h3 class="step-title">Clear Quote & Interactive Layout</h3>
-          <p class="step-desc">Praneeth reviews your specs and provides a transparent quote (in INR, with 25% JUIT discount if applicable) and an initial interactive layout preview.</p>
+          <p class="step-desc">Praneeth reviews your specs and provides a transparent quote in Indian Rupees with an initial interactive layout preview.</p>
         </div>
       </div>
 
@@ -726,13 +638,13 @@
     </div>
   </section>
 
-  <!-- Pricing Section (With JUIT Discount Calculation & Online Booking) -->
+  <!-- Pricing Section (Direct Investment & Online Booking) -->
   <section id="pricing" class="pricing-section container">
     <div class="section-header">
       <span class="section-tag">Transparent Indian Pricing (INR)</span>
       <h2 class="section-title">College & Business Friendly Packages</h2>
       <p class="section-description">
-        Affordable, transparent rates with zero hidden fees. Sign in with <strong>@juitsolan.in</strong> to automatically apply <strong>25% Campus Discount</strong>!
+        Affordable, transparent rates in Indian Rupees with zero hidden fees. Engineered with direct developer pair-programming support.
       </p>
     </div>
 
@@ -747,9 +659,6 @@
             <span class="price-currency">₹</span>
             <span class="price-value" data-original="999">999</span>
             <span class="price-term">/ one-time</span>
-          </div>
-          <div class="juit-savings-pill hidden" id="savings1">
-            <i class="fa-solid fa-tag"></i> JUITian Price: <strong>₹749</strong> (Save ₹250)
           </div>
         </div>
         <ul class="tier-features">
@@ -781,9 +690,6 @@
             <span class="price-value" data-original="2499">2,499</span>
             <span class="price-term">/ one-time</span>
           </div>
-          <div class="juit-savings-pill hidden" id="savings2">
-            <i class="fa-solid fa-tag"></i> JUITian Price: <strong>₹1,874</strong> (Save ₹625)
-          </div>
         </div>
         <ul class="tier-features">
           <li><i class="fa-solid fa-check"></i> Up to 5 Pages or Dynamic Sections</li>
@@ -813,9 +719,6 @@
             <span class="price-currency">₹</span>
             <span class="price-value" data-original="4999">4,999</span>
             <span class="price-term">/ starting from</span>
-          </div>
-          <div class="juit-savings-pill hidden" id="savings3">
-            <i class="fa-solid fa-tag"></i> JUITian Price: <strong>₹3,749</strong> (Save ₹1,250)
           </div>
         </div>
         <ul class="tier-features">
@@ -904,7 +807,7 @@
           <div class="form-row">
             <div class="form-group">
               <label for="clientEmail">Email Address <span class="required">*</span></label>
-              <input type="email" id="clientEmail" name="clientEmail" placeholder="e.g. yourname@juitsolan.in" required>
+              <input type="email" id="clientEmail" name="clientEmail" placeholder="e.g. yourname@gmail.com" required>
             </div>
             <div class="form-group">
               <label for="clientPhone">WhatsApp / Phone Number</label>
@@ -1001,16 +904,6 @@
         <div class="pay-summary-row">
           <span class="pay-label">Standard Price:</span>
           <span id="payOriginalPrice" class="pay-val">₹999</span>
-        </div>
-        <div class="pay-summary-row discount-row hidden" id="payDiscountRow">
-          <span class="pay-label"><i class="fa-solid fa-graduation-cap"></i> JUIT Student Discount (25%):</span>
-          <span id="payDiscountAmount" class="pay-val text-green">- ₹250</span>
-        </div>
-        <div class="pay-juit-toggle-row" style="margin: 0.6rem 0; font-size: 0.85rem;">
-          <label class="juit-toggle-label" for="juitDiscountToggle" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #34d399;">
-            <input type="checkbox" id="juitDiscountToggle" style="width: auto; cursor: pointer; accent-color: #10b981;">
-            <span>🎓 JUIT Solan Student / Faculty (Apply Flat 25% OFF)</span>
-          </label>
         </div>
         <div class="pay-divider"></div>
         <div class="pay-summary-row total-row">
@@ -1149,7 +1042,7 @@
           </div>
         </a>
         <p class="footer-tagline">
-          Crafting custom, high-converting websites and software solutions for students, creators, and businesses worldwide. Special campus discounts for JUIT Solan.
+          Crafting custom, high-converting websites and software solutions for students, creators, and businesses worldwide.
         </p>
       </div>
 

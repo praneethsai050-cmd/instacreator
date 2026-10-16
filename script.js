@@ -1,6 +1,6 @@
 /**
  * DOMYOSITE - WEB STUDIO BY PRANEETH SAI
- * Interactive Core: Google Auth, @juitsolan.in Campus Discount, UPI Pay Layout & Previews
+ * Interactive Core: UPI Pay Layout, AI Estimator & Interactive Previews
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,14 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const PRANEETH_WHATSAPP_NUMBER = '918777679256';
   const PRANEETH_EMAIL = 'domyosite@gmail.com';
   const PRIMARY_UPI_ID = '8777679256@ybl';
-  const JUIT_DISCOUNT_PERCENT = 25; // 25% Flat Discount for JUIT Waknaghat students
 
   // --- State Management ---
   let activePaymentOrder = {
     planName: 'Student & College Starter',
     basePrice: 999,
-    finalPrice: 999,
-    isJuitDiscount: false
+    finalPrice: 999
   };
 
   // --- Mobile Navigation Menu ---
@@ -77,25 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- JUIT Solan Promo Banner ---
-  const juitBanner = document.getElementById('juitBanner');
-  const closeJuitBanner = document.getElementById('closeJuitBanner');
-
-  if (closeJuitBanner && juitBanner) {
-    closeJuitBanner.addEventListener('click', () => {
-      juitBanner.classList.add('hidden');
-    });
-  }
-
   // --- Interactive Pay Layout & Checkout Modal ---
   const paymentModalOverlay = document.getElementById('paymentModalOverlay');
   const closePaymentModal = document.getElementById('closePaymentModal');
   const payPlanName = document.getElementById('payPlanName');
   const payOriginalPrice = document.getElementById('payOriginalPrice');
-  const payDiscountRow = document.getElementById('payDiscountRow');
-  const payDiscountAmount = document.getElementById('payDiscountAmount');
   const payFinalTotal = document.getElementById('payFinalTotal');
-  const juitDiscountToggle = document.getElementById('juitDiscountToggle');
   const dynamicUpiQr = document.getElementById('dynamicUpiQr');
   const gpayDeepLink = document.getElementById('gpayDeepLink');
   const phonepeDeepLink = document.getElementById('phonepeDeepLink');
@@ -104,32 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
   const utrRefInput = document.getElementById('utrRefInput');
 
-  function updatePaymentTotals(applyJuit) {
-    const basePrice = activePaymentOrder.basePrice;
-    let finalPrice = basePrice;
-    let discount = 0;
+  function openPaymentModal(planName, price) {
+    const basePrice = parseInt(price, 10) || 999;
+    activePaymentOrder.planName = planName;
+    activePaymentOrder.basePrice = basePrice;
+    activePaymentOrder.finalPrice = basePrice;
 
-    if (applyJuit) {
-      discount = Math.round(basePrice * 0.25);
-      finalPrice = basePrice - discount;
-    }
-
-    activePaymentOrder.finalPrice = finalPrice;
-    activePaymentOrder.isJuitDiscount = applyJuit;
-
-    if (payDiscountRow) {
-      if (applyJuit) {
-        payDiscountRow.classList.remove('hidden');
-        if (payDiscountAmount) payDiscountAmount.textContent = `- ₹${discount.toLocaleString()}`;
-      } else {
-        payDiscountRow.classList.add('hidden');
-      }
-    }
-
-    if (payFinalTotal) payFinalTotal.textContent = `₹${finalPrice.toLocaleString()}`;
+    if (payPlanName) payPlanName.textContent = planName;
+    if (payOriginalPrice) payOriginalPrice.textContent = `₹${basePrice.toLocaleString()}`;
+    if (payFinalTotal) payFinalTotal.textContent = `₹${basePrice.toLocaleString()}`;
 
     // Generate Standard UPI String
-    const upiUri = `upi://pay?pa=${encodeURIComponent(PRIMARY_UPI_ID)}&pn=${encodeURIComponent('Praneeth Sai (DoMyOSite)')}&am=${finalPrice}&cu=INR&tn=${encodeURIComponent(activePaymentOrder.planName.substring(0, 20))}`;
+    const upiUri = `upi://pay?pa=${encodeURIComponent(PRIMARY_UPI_ID)}&pn=${encodeURIComponent('Praneeth Sai (DoMyOSite)')}&am=${basePrice}&cu=INR&tn=${encodeURIComponent(planName.substring(0, 20))}`;
 
     // Dynamic QR Code generation using public QR server API
     if (dynamicUpiQr) {
@@ -141,30 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gpayDeepLink) gpayDeepLink.href = upiUri;
     if (phonepeDeepLink) phonepeDeepLink.href = upiUri;
     if (paytmDeepLink) paytmDeepLink.href = upiUri;
-  }
-
-  function openPaymentModal(planName, price) {
-    const basePrice = parseInt(price, 10) || 999;
-    activePaymentOrder.planName = planName;
-    activePaymentOrder.basePrice = basePrice;
-
-    if (payPlanName) payPlanName.textContent = planName;
-    if (payOriginalPrice) payOriginalPrice.textContent = `₹${basePrice.toLocaleString()}`;
-
-    const applyJuit = juitDiscountToggle ? juitDiscountToggle.checked : false;
-    updatePaymentTotals(applyJuit);
 
     if (paymentModalOverlay) paymentModalOverlay.classList.remove('hidden');
   }
 
   function closePaymentModalDialog() {
     if (paymentModalOverlay) paymentModalOverlay.classList.add('hidden');
-  }
-
-  if (juitDiscountToggle) {
-    juitDiscountToggle.addEventListener('change', () => {
-      updatePaymentTotals(juitDiscountToggle.checked);
-    });
   }
 
   // Attach click listeners to all "Book Online" and "Instant Pay" triggers
@@ -223,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
 ----------------------------------------
 *Plan Booked:* ${activePaymentOrder.planName}
 *Total Paid:* ₹${activePaymentOrder.finalPrice.toLocaleString()}
-*JUIT Campus Discount:* ${activePaymentOrder.isJuitDiscount ? 'Yes (25% Applied)' : 'No'}
 *Transaction UTR / Ref:* ${utr}
 ----------------------------------------
 Hi Praneeth, I've initiated this payment for my website. Please confirm and let's get started!`;
@@ -313,9 +265,8 @@ Hi Praneeth, I've initiated this payment for my website. Please confirm and let'
     const budget = document.getElementById('budgetRange').value;
     const timeline = document.getElementById('timeline').value;
     const details = document.getElementById('projectDetails').value.trim();
-    const isJuit = email.toLowerCase().endsWith('@juitsolan.in');
 
-    return { name, email, phone, type, budget, timeline, details, isJuit };
+    return { name, email, phone, type, budget, timeline, details };
   }
 
   function generateFormattedMessage(data) {
@@ -327,7 +278,6 @@ Hi Praneeth, I've initiated this payment for my website. Please confirm and let'
 *Website Type:* ${data.type}
 *Estimated Budget:* ${data.budget}
 *Desired Timeline:* ${data.timeline}
-*JUIT Student Discount:* ${data.isJuit ? 'Verified 25% Off Eligible' : 'Standard'}
 
 *Project Requirements & Notes:*
 ${data.details}
@@ -499,163 +449,6 @@ ${data.details}
     }
   }
 
-  // --- Three.js 3D Web Experience: Interactive Studio Configurator ---
-  function initShowcase3DConfigurator() {
-    const canvas = document.getElementById('showcase3dCanvas');
-    if (!canvas || typeof THREE === 'undefined') return;
-
-    try {
-      const container = canvas.parentElement;
-      let width = container.clientWidth || 400;
-      let height = container.clientHeight || 420;
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-      camera.position.z = 5.5;
-
-      const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        alpha: true,
-        antialias: true
-      });
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-
-      // Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-      scene.add(ambientLight);
-
-      const dirLight1 = new THREE.DirectionalLight(0x38bdf8, 2.0);
-      dirLight1.position.set(4, 5, 4);
-      scene.add(dirLight1);
-
-      const dirLight2 = new THREE.DirectionalLight(0xa855f7, 2.0);
-      dirLight2.position.set(-4, -3, -2);
-      scene.add(dirLight2);
-
-      // Geometries map
-      const geometries = {
-        torus: new THREE.TorusKnotGeometry(1.3, 0.38, 100, 16),
-        icosahedron: new THREE.IcosahedronGeometry(1.8, 1),
-        sphere: new THREE.SphereGeometry(1.6, 32, 32)
-      };
-
-      // Materials
-      const wireMat = new THREE.MeshStandardMaterial({
-        color: 0x38bdf8,
-        wireframe: true,
-        emissive: 0x0f2b48,
-        roughness: 0.3
-      });
-
-      const solidMat = new THREE.MeshStandardMaterial({
-        color: 0x6366f1,
-        roughness: 0.15,
-        metalness: 0.85,
-        emissive: 0x1e1b4b
-      });
-
-      let currentMesh = new THREE.Mesh(geometries.torus, wireMat);
-      scene.add(currentMesh);
-
-      let currentStyle = 'wireframe';
-      let speedMultiplier = 1.0;
-
-      // Controls listeners
-      document.querySelectorAll('.geom-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.geom-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const geomKey = btn.dataset.geom;
-          if (geometries[geomKey]) {
-            scene.remove(currentMesh);
-            currentMesh = new THREE.Mesh(geometries[geomKey], currentStyle === 'wireframe' ? wireMat : solidMat);
-            scene.add(currentMesh);
-          }
-        });
-      });
-
-      document.querySelectorAll('.style-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentStyle = btn.dataset.style;
-          currentMesh.material = currentStyle === 'wireframe' ? wireMat : solidMat;
-        });
-      });
-
-      const speedSlider = document.getElementById('threeDSpeedSlider');
-      const speedLabel = document.getElementById('speedValueDisplay');
-      if (speedSlider) {
-        speedSlider.addEventListener('input', (e) => {
-          speedMultiplier = parseFloat(e.target.value);
-          if (speedLabel) speedLabel.textContent = `${speedMultiplier.toFixed(1)}x`;
-        });
-      }
-
-      // Drag to rotate interaction
-      let isDragging = false;
-      let prevMousePos = { x: 0, y: 0 };
-
-      container.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        prevMousePos = { x: e.clientX, y: e.clientY };
-      });
-
-      window.addEventListener('mouseup', () => { isDragging = false; });
-
-      window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const deltaX = e.clientX - prevMousePos.x;
-        const deltaY = e.clientY - prevMousePos.y;
-        currentMesh.rotation.y += deltaX * 0.008;
-        currentMesh.rotation.x += deltaY * 0.008;
-        prevMousePos = { x: e.clientX, y: e.clientY };
-      });
-
-      // Touch drag
-      container.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 1) {
-          isDragging = true;
-          prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        }
-      }, { passive: true });
-
-      window.addEventListener('touchend', () => { isDragging = false; });
-
-      window.addEventListener('touchmove', (e) => {
-        if (!isDragging || e.touches.length !== 1) return;
-        const deltaX = e.touches[0].clientX - prevMousePos.x;
-        const deltaY = e.touches[0].clientY - prevMousePos.y;
-        currentMesh.rotation.y += deltaX * 0.01;
-        currentMesh.rotation.x += deltaY * 0.01;
-        prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }, { passive: true });
-
-      function onConfigResize() {
-        if (!container) return;
-        width = container.clientWidth;
-        height = container.clientHeight || 420;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-      }
-      window.addEventListener('resize', onConfigResize, { passive: true });
-
-      function animateConfigurator() {
-        requestAnimationFrame(animateConfigurator);
-        if (!isDragging) {
-          currentMesh.rotation.y += 0.008 * speedMultiplier;
-          currentMesh.rotation.x += 0.004 * speedMultiplier;
-        }
-        renderer.render(scene, camera);
-      }
-      animateConfigurator();
-    } catch (e) {
-      console.warn('Showcase 3D canvas disabled or WebGL unsupported:', e);
-    }
-  }
-
   // --- Gemini API Dev: AI Website Scope & Cost Estimator ---
   function initGeminiAIEstimator() {
     const aiEstimateBtn = document.getElementById('aiEstimateBtn');
@@ -703,8 +496,7 @@ ${data.details}
 
         let plan = 'Student & College Starter';
         let originalPrice = 999;
-        let discountedPrice = 749;
-        let stack = 'HTML5, Three.js, CSS3, UPI QR';
+        let stack = 'HTML5, JavaScript, CSS3, UPI QR';
         let turnaround = '24 - 48 Hours';
         let title = 'Student & Personal Portfolio';
         let summary = 'A lightning-fast, single-page showcase tailored for college placements and personal branding with GitHub integration, resume PDF download, and zero monthly hosting fees via GitHub Pages.';
@@ -712,7 +504,6 @@ ${data.details}
         if (lower.includes('store') || lower.includes('e-commerce') || lower.includes('shop') || lower.includes('cart') || lower.includes('final year')) {
           plan = 'Full-Stack App & Store';
           originalPrice = 4999;
-          discountedPrice = 3749;
           stack = 'JavaScript/Node, Python, UPI QR / Payment Gateway, Database';
           turnaround = '3 - 5 Days';
           title = 'Full-Stack E-Commerce / Custom Web App';
@@ -720,8 +511,7 @@ ${data.details}
         } else if (lower.includes('business') || lower.includes('agency') || lower.includes('company') || lower.includes('landing') || lower.includes('multi')) {
           plan = 'Professional Portfolio & Business';
           originalPrice = 2499;
-          discountedPrice = 1874;
-          stack = 'HTML5/CSS3, Three.js 3D, SEO Optimization, Lead Intake';
+          stack = 'HTML5/CSS3, SEO Optimization, Lead Intake';
           turnaround = '48 - 72 Hours';
           title = 'High-Impact Business & Agency Website';
           summary = 'Multi-section conversion-driven digital presence with customized modern branding, client review carousel, lead capture forms, and custom domain setup.';
@@ -733,7 +523,7 @@ ${data.details}
         if (aiTimeline) aiTimeline.textContent = turnaround;
         if (aiPackage) aiPackage.textContent = plan;
         if (aiPrice) {
-          aiPrice.textContent = `₹${originalPrice.toLocaleString()} (₹${discountedPrice.toLocaleString()} with JUIT Solan discount)`;
+          aiPrice.textContent = `₹${originalPrice.toLocaleString()}`;
         }
 
         if (bookDirectBtn) {
@@ -770,8 +560,7 @@ ${data.details}
     }
   }
 
-  // Initialize 3D Experience and Gemini Estimator
+  // Initialize Background 3D and Gemini Estimator
   initHero3DExperience();
-  initShowcase3DConfigurator();
   initGeminiAIEstimator();
 });

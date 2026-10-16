@@ -19,14 +19,8 @@
 ## 🌟 Key Features
 
 - **Brand & Developer Identity**: **DoMyOSite** engineered by **Praneeth Sai**, connecting clients directly with the developer with zero middlemen.
-- **Satyameva-Inspired Glassmorphic Authentication**:
-  - 🕉️ **Multi-Screen Auth Flow**: Complete Login, Signup, and 6-digit OTP verification screens matching the Satyameva design pattern.
-  - 🔑 **Quick Fill Demos**: 1-click test pre-fills for Studio Admin (`domyosite@gmail.com`) and JUIT Student (`rahul@juitsolan.in`).
-  - 🔢 **Interactive OTP Digit Inputs**: Auto-advancing inputs with backspace and paste support.
-  - 🎓 **JUIT Waknaghat 25% Campus Discount**: Automatic 25% discount applied across all tiers for `@juitsolan.in` accounts.
-- **Three.js 3D Web Experience (WebGL 2.0)**:
+- **Three.js Interactive Hero Experience (WebGL 2.0)**:
   - 🌐 **Interactive Hero 3D Scene**: Floating wireframe icosahedron and octahedron core with 200 cyberspace particle stars and smooth mouse-tracking parallax.
-  - 🧊 **Real-Time 3D Configurator**: Interactive viewport allowing clients to switch geometries (Torus Knot, Tech Icosahedron, Cyber Sphere), toggle Wireframe vs. Solid Metallic, adjust rotation speed, and rotate in 3D.
   - ⚡ **Optimized Performance**: Clamped mobile DPR (1.0) and WebGL capability detection fallback.
 - **Gemini API AI Scope & Cost Estimator (`gemini-api-dev`)**:
   - 🤖 **Powered by Gemini 3.8 Flash**: Clients describe any website idea and receive an instant structured breakdown of recommended tech stack, turnaround, package tier, and budget in INR.
@@ -39,6 +33,8 @@
   - 📲 **Instant App Checkout**: Direct intent deep links for Google Pay, PhonePe, Paytm, and BHIM.
   - 📋 **1-Click Copy UPI ID**: Copies `8777679256@ybl` with visual feedback.
   - 📝 **UTR Verification**: Allows users to enter their transaction reference with instant confirmation.
+- **Clean Direct Access**:
+  - ⚡ Instant loading website with zero authentication barriers or popups.
 
 ---
 
@@ -52,9 +48,9 @@ instacreator/
 ├── .gitignore           # Clean exclusion of temporary/OS files
 ├── favicon.svg          # Glowing code brackets vector favicon
 ├── firestore.rules      # Production-audited Firebase security rules
-├── index.html           # Full semantic website structure with SEO, Auth & Pay layout
+├── index.html           # Full semantic website structure with SEO & Pay layout
 ├── style.css            # Midnight Tech CSS theme with glassmorphism & responsive grid
-├── script.js            # Auth, JUIT discount, dynamic UPI QR & WhatsApp logic
+├── script.js            # Background 3D, AI estimator, dynamic UPI QR & WhatsApp logic
 ├── LICENSE              # MIT License
 └── README.md            # Repository documentation and guide
 ```
